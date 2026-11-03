@@ -20,14 +20,12 @@
                         I18N="Tab in help menu" text="Story Mode"/>
                 <icon-button id="page6" width="128" height="128" icon="gui/icons/mass.png"
                         I18N="Tab in help menu" text="Kart classes"/>
-                <icon-button id="page7" width="128" height="128" icon="gui/icons/options_input.png"
-                        I18N="Tab in help menu" text="Multiplayer"/>
             </vertical-tabs>
 
             <spacer width="2%" height="100%"/>
 
             <box width="78%" height="100%" layout="vertical-row">
-                <label align="center" I18N="In the help menu" text="SuperTuxKart can be played in multiplayer mode online...:"/>
+                <label align="center" I18N="In the help menu" text="Kart Race can be played in multiplayer mode online...:"/>
                 <div width="100%" proportion="2" layout="horizontal-row">
                     <icon align="center" width="8%" height="100%" icon="gui/icons/networking_icon.png"/>
                     <spacer width="3%" height="100%"/>

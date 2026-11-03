@@ -224,6 +224,9 @@ void TracksAndGPScreen::beforeAddingWidget()
             tabs->addTextChild( _(groups[n].c_str()) , groups[n]);
     } // for n<group_amount
 
+    // A single group tab can't be switched to anything, so don't show it
+    tabs->setCollapsed(group_amount <= 1, this);
+
     // Don't give a hint as to how many tracks should be displayed and trust the ribbon logic
 }   // beforeAddingWidget
 

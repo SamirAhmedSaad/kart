@@ -113,10 +113,6 @@ namespace
     };   // EnableInternetListener
 
 #ifdef ANDROID
-    /** Asked once per start of the game, before singleplayer or story mode,
-     *  if more tracks can be downloaded from Google Play. */
-    bool g_track_pack_offered = false;
-
     class TrackPackListener : public MessageDialog::IConfirmDialogListener
     {
         GUIEngine::Widget* m_widget;
@@ -419,9 +415,14 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
         ribbon->getSelectionIDString(PLAYER_ID_GAME_MASTER);
 
 #ifdef ANDROID
-    if ((selection == "new" || selection == "story") && !g_track_pack_offered)
+    // Ask once, before the first singleplayer or story mode game, if more
+    // tracks can be downloaded from Google Play
+    if ((selection == "new" || selection == "story") &&
+        !UserConfigParams::m_track_pack_offered)
     {
-        g_track_pack_offered = true;
+        UserConfigParams::m_track_pack_offered = true;
+        // Android can close the game without a normal exit, save it now
+        user_config->saveConfig();
         const std::string info = Android_getTrackPackInfo();
         std::vector<std::string> parts = StringUtils::split(info, ' ');
         if (parts.size() == 2)

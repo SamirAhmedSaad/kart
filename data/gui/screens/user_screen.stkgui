@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <stkgui>
     <div x="1%" y="1%" width="98%" height="98%" layout="vertical-row" >
-        <header align="center" height="8%" width="80%" text="Players" text_align="center"/>
+        <header align="center" height="8%" width="80%" text="Profile" text_align="center"/>
         <spacer height="1%" width="10"/>
 
         <box proportion="1" width="98%" layout="vertical-row">
@@ -57,17 +57,17 @@
 			
 			<div width="90%" align="center" layout="vertical-row" height="13%">
 				<buttonbar id="options" width="100%" height="100%" align="center">
-					<icon-button id="new_user" width="128" height="128" icon="gui/icons/blue_plus.png"
+					<icon-button id="new_user" width="128" height="128" icon="gui/icons/tile_add.png"
 								 I18N="In the user screen" text="Add" label_location="bottom"/>
-					<icon-button id="delete" width="128" height="128" icon="gui/icons/remove.png"
+					<icon-button id="delete" width="128" height="128" icon="gui/icons/tile_remove.png"
 								 I18N="In the user screen" text="Delete" label_location="bottom"/>
-					<icon-button id="rename" width="128" height="128" icon="gui/icons/rename.png"
+					<icon-button id="rename" width="128" height="128" icon="gui/icons/tile_rename.png"
 								 I18N="In the user screen" text="Rename" label_location="bottom"/>
-					<icon-button id="default_kart_color" width="128" height="128" icon="gui/icons/edit.png"
+					<icon-button id="default_kart_color" width="128" height="128" icon="gui/icons/tile_edit.png"
 								 I18N="In the user screen" text="Kart color" label_location="bottom"/>
-					<icon-button id="cancel" width="128" height="128" icon="gui/icons/back.png"
+					<icon-button id="cancel" width="128" height="128" icon="gui/icons/tile_back.png"
 								 I18N="In the user screen" text="Cancel" label_location="bottom"/>
-					<icon-button id="ok" width="128" height="128" icon="gui/icons/green_check.png"
+					<icon-button id="ok" width="128" height="128" icon="gui/icons/tile_start.png"
 								 I18N="In the user screen" text="OK" label_location="bottom"/>
 				</buttonbar>
 			</div>

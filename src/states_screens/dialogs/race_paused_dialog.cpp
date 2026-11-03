@@ -145,7 +145,8 @@ RacePausedDialog::RacePausedDialog(const float percentWidth,
             getWidget<IconButtonWidget>("backbtn")->setLabel(_("Back to Battle"));
             if (!NetworkConfig::get()->isNetworking())
             {
-                getWidget<IconButtonWidget>("newrace")->setLabel(_("Setup New Game"));
+                if (getWidget<IconButtonWidget>("newrace"))
+                    getWidget<IconButtonWidget>("newrace")->setLabel(_("Setup New Game"));
                 if (getWidget<IconButtonWidget>("restart"))
                     getWidget<IconButtonWidget>("restart")->setLabel(_("Restart Battle"));
             }
@@ -156,7 +157,8 @@ RacePausedDialog::RacePausedDialog(const float percentWidth,
             getWidget<IconButtonWidget>("backbtn")->setLabel(_("Back to Race"));
             if (!NetworkConfig::get()->isNetworking())
             {
-                getWidget<IconButtonWidget>("newrace")->setLabel(_("Setup New Race"));
+                if (getWidget<IconButtonWidget>("newrace"))
+                    getWidget<IconButtonWidget>("newrace")->setLabel(_("Setup New Race"));
                 if (getWidget<IconButtonWidget>("restart"))
                 {
 #ifdef MOBILE_STK
@@ -239,12 +241,14 @@ void RacePausedDialog::loadedFromFile()
     }
 
     // Keep the pause menu short like other mobile racing games: giving up
-    // is the same as exiting for the player, and help is in the main menu
+    // is the same as exiting for the player, a new race is set up from the
+    // main menu after exiting, and help is in the main menu
     {
         GUIEngine::RibbonWidget* choice_ribbon =
             getWidget<GUIEngine::RibbonWidget>("choiceribbon");
         choice_ribbon->deleteChild("endrace");
         choice_ribbon->deleteChild("help");
+        choice_ribbon->deleteChild("newrace");
     }
 
     // Remove all extraneous buttons in benchmark mode

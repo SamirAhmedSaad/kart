@@ -45,3 +45,5 @@ magick bottom_bar.png -colorspace gray -auto-level +level 8%,22% -fill "#2a1760"
 magick ../cartoon/background.jpg -modulate 72,115 ( -size 1920x1080 gradient:"rgba(76,29,149,0.45)"-"rgba(30,20,64,0.25)" ) -compose over -composite ( -size 1920x1080 xc:none -fill "rgba(15,8,35,0.35)" -draw "rectangle 0,560 1920,1080" -blur 0x60 ) -compose over -composite -quality 92 background.jpg
 #   tile options_players.png tile_players.png "#b197fc" "#6d28d9" "#2e1065" 12 170
 #   tile green_check.png     tile_start.png   "#ffd166" "#f97316" "#7c2d12" 12 180  (Start Race and Continue)
+#   Profile screen (blue_plus, remove, rename, edit -> tile_add, tile_remove, tile_rename, tile_edit): "#b197fc" "#6d28d9" "#2e1065" 12 170
+magick -size 64x32 xc:none -fill "#2a1a5e" -stroke "#8b5cf6" -strokewidth 3 -draw "roundrectangle 2,2 61,29 8,8" PNG32:progress_bg.png

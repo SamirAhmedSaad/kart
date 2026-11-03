@@ -9,7 +9,7 @@
 
             <vertical-tabs id="options_choice" height="100%" width="20%">
                 <icon-button id="tab_display" width="128" height="128" icon="gui/icons/options_display.png"
-                        I18N="Section in the settings menu" text="Display"/>
+                        I18N="Section in the settings menu" text="Camera"/>
                 <icon-button id="tab_video" width="128" height="128" icon="gui/icons/options_video.png"
                         I18N="Section in the settings menu" text="Graphics"/>
                 <icon-button id="tab_audio" width="128" height="128" icon="gui/icons/options_audio.png"

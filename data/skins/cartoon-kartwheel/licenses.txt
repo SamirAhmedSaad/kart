@@ -49,6 +49,7 @@ Files:
  dialog_solid.png
  glass_iconhighlight_focus.png
  glass_square_focused_gold.png
+ progress_bg.png
  section_solid.png
 Copyright: 2026 Kart Race contributors
 License: CC-BY-SA 4.0
@@ -58,4 +59,4 @@ Files:
  data/gui/icons/tile_*.png
 Copyright: 2026 Kart Race contributors, plus the authors of the icon in each tile
 License: same as the Cartoon skin icon each tile is made from
-Comment: The Cartoon skin icons (back, restart, main_quit, main_options, green_check, red_x, android/steering_wheel, android/accelerator_icon, android/gyroscope_icon, main_help, main_about, crown, options_players, and this skin's main_race, menu_race, menu_story and tutorial) placed on a purple or orange tile, see readme.txt.
+Comment: The Cartoon skin icons (back, restart, main_quit, main_options, green_check, red_x, android/steering_wheel, android/accelerator_icon, android/gyroscope_icon, main_help, main_about, crown, options_players, blue_plus, remove, rename, edit, and this skin's main_race, menu_race, menu_story and tutorial) placed on a purple or orange tile, see readme.txt.

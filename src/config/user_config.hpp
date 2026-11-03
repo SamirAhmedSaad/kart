@@ -566,7 +566,7 @@ namespace UserConfigParams
             "considered as centered in steering button."));
 
     PARAM_PREFIX FloatUserConfigParam         m_multitouch_sensitivity_x
-            PARAM_DEFAULT( FloatUserConfigParam(0.2f, "multitouch_sensitivity_x",
+            PARAM_DEFAULT( FloatUserConfigParam(0.5f, "multitouch_sensitivity_x",
             &m_multitouch_group,
             "A parameter in range [0, 1.0] that determines the sensitivity for x axis."));
 
@@ -1351,6 +1351,10 @@ namespace UserConfigParams
                                                     "If HW reports are enabled."));
 
     // ---- User management
+
+    PARAM_PREFIX BoolUserConfigParam        m_track_pack_offered
+            PARAM_DEFAULT(  BoolUserConfigParam(false, "track_pack_offered",
+          "The extra tracks from Google Play were already offered."));
 
     PARAM_PREFIX BoolUserConfigParam        m_always_show_login_screen
             PARAM_DEFAULT(  BoolUserConfigParam(false, "always_show_login_screen",

@@ -529,7 +529,15 @@ const std::string& RibbonWidget::getSelectionIDString(const int playerID)
 {
     static std::string empty;
     if (m_selection[playerID] == -1) return empty;
-    if (m_active_children.size() == 0)      return empty;
+    if (m_active_children.size() == 0)
+    {
+        // A hidden ribbon has no active children, but still has a selection
+        // (e.g. a single group tab that is hidden because it can't change)
+        if (m_children.size() == 0) return empty;
+        const int n = std::min(m_selection[playerID],
+                               (int)m_children.size() - 1);
+        return m_children[n].m_properties[PROP_ID];
+    }
 
     // This can happen if an addon is removed, which causes a tab group
     // to be removed. If this tab group was previously selected, an

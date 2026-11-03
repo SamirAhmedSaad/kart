@@ -66,10 +66,10 @@ Here you can configure advanced theming rules for this skin
       left_border="7" right_border="7" top_border="7" bottom_border="7"
       preserve_h_aspect_ratios="false" />
 
-<!-- Provided by base theme
-<element type="progress" state="neutral" image="section.png"
+<!-- Dark track behind the filled part of progress bars (kart stats) -->
+<element type="progress" state="neutral" image="progress_bg.png"
       left_border="7" right_border="7" top_border="7" bottom_border="7"
-      preserve_h_aspect_ratios="false" />-->
+      preserve_h_aspect_ratios="false" />
       
       
 <element type="tab" state="neutral" image="tab.png"

@@ -252,6 +252,9 @@ void KartSelectionScreen::beforeAddingWidget()
             tabs->addTextChild( _(groups[n].c_str()) , groups[n]);
     } // for n<group_amount
 
+    // A single group tab can't be switched to anything, so don't show it
+    tabs->setCollapsed(group_amount <= 1, this);
+
     const std::vector<std::string> &classes = kart_properties_manager->getAllKartTypes();
     GUIEngine::SpinnerWidget* kart_class = getWidget<GUIEngine::SpinnerWidget>("kart_class");
     assert(kart_class != NULL);
