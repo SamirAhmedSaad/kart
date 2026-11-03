@@ -58,4 +58,4 @@ Files:
  data/gui/icons/tile_*.png
 Copyright: 2026 Kart Race contributors, plus the authors of the icon in each tile
 License: same as the Cartoon skin icon each tile is made from
-Comment: The Cartoon skin icons (back, restart, main_quit, main_options, green_check, red_x, android/steering_wheel, android/accelerator_icon, android/gyroscope_icon, and this skin's main_race) placed on a purple tile, see readme.txt.
+Comment: The Cartoon skin icons (back, restart, main_quit, main_options, green_check, red_x, android/steering_wheel, android/accelerator_icon, android/gyroscope_icon, main_help, main_about, crown, and this skin's main_race, menu_race, menu_story and tutorial) placed on a purple or orange tile, see readme.txt.

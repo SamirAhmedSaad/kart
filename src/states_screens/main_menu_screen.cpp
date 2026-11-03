@@ -292,6 +292,8 @@ void MainMenuScreen::init()
     ((IconButtonWidget*)r->getChildren().get(2))->unfocused(PLAYER_ID_GAME_MASTER, NULL);
 
     r = getWidget<RibbonWidget>("menu_toprow");
+    // Start on the race tile, it is the main action of this screen
+    r->select("new", PLAYER_ID_GAME_MASTER);
     r->setFocusForPlayer(PLAYER_ID_GAME_MASTER);
     DemoWorld::resetIdleTime();
 

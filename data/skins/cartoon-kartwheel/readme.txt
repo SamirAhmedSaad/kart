@@ -21,3 +21,10 @@ magick -size 256x256 xc:none -fill "rgba(255,214,90,0.45)" -stroke "#ffb300" -st
 magick -size 256x256 xc:none -fill "#f7f3ff" -stroke "#3b1d6e" -strokewidth 14 -draw "roundrectangle 8,8 247,247 34,34" -fill none -stroke "#8b5cf6" -strokewidth 5 -draw "roundrectangle 21,21 234,234 24,24" PNG32:dialog_solid.png
 # Tile icons for the pause menu and yes/no dialogs, for each icon:
 magick -size 256x256 xc:none ( -size 256x256 gradient:"#b197fc"-"#6d28d9" ( -size 256x256 xc:black -fill white -draw "roundrectangle 8,8 247,247 44,44" ) -alpha off -compose CopyOpacity -composite ) -compose over -composite -fill none -stroke "#2e1065" -strokewidth 12 -draw "roundrectangle 8,8 247,247 44,44" -stroke "rgba(255,255,255,0.55)" -strokewidth 4 -draw "roundrectangle 22,22 233,233 32,32" ( ICON.png -resize 170x170 ) -gravity center -compose over -composite PNG32:data/gui/icons/tile_NAME.png
+# Home screen tiles (orange for the main race button, gold frame when focused):
+# tile ICON OUT TOP BOTTOM FRAME FRAME_WIDTH ICON_SIZE is the tile command above with the gradient, frame and icon size as parameters
+#   tile menu_race.png  tile_menu_race.png        "#ffd166" "#f97316" "#7c2d12" 12 180
+#   tile menu_race.png  tile_menu_race_focus.png  "#ffe08a" "#fb923c" "#ffd23f" 20 190
+#   tile menu_story.png tile_menu_story.png       "#b197fc" "#6d28d9" "#2e1065" 12 180
+#   tile menu_story.png tile_menu_story_focus.png "#c4b5fd" "#7c3aed" "#ffd23f" 20 190
+#   bottom row (main_options, main_help, tutorial, crown, main_about, main_quit): "#b197fc" "#6d28d9" "#2e1065" 12 170
