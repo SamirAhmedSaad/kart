@@ -278,6 +278,10 @@ void BaseUserScreen::makeEntryFieldsVisible()
     getWidget<LabelWidget>("label_guest")->setVisible(online);
     getWidget<CheckBoxWidget>("guest")->setVisible(online);
 #endif
+    // This game is offline only, there are no online accounts to log in to
+    m_online_cb->setState(false);
+    m_online_cb->setVisible(false);
+    getWidget<LabelWidget>("label_online")->setVisible(false);
     bool online = m_online_cb->getState();
     getWidget<LabelWidget>("label_username")->setVisible(online);
     m_username_tb->setVisible(online);

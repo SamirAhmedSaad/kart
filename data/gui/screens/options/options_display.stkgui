@@ -2,14 +2,12 @@
 <stkgui>
     <icon-button id="back" x="1%" y="0" height="9%" icon="gui/icons/back.png"/>
     <div x="1%" y="1%" width="98%" height="98%" layout="vertical-row" >
-        <header width="80%" height="8%" align="center" text="SuperTuxKart Options" text_align="center"/>
+        <header width="80%" height="8%" align="center" text="Options" text_align="center"/>
         <spacer width="100%" height="1%"/>
 
         <div width="100%" height="91%" layout="horizontal-row" >
 
             <vertical-tabs id="options_choice" height="100%" width="20%">
-                <icon-button id="tab_general" width="128" height="128" icon="gui/icons/options_general.png"
-                        I18N="Section in the settings menu" text="General"/>
                 <icon-button id="tab_display" width="128" height="128" icon="gui/icons/options_display.png"
                         I18N="Section in the settings menu" text="Display"/>
                 <icon-button id="tab_video" width="128" height="128" icon="gui/icons/options_video.png"
@@ -30,8 +28,33 @@
 
             <box width="78%" height="100%" layout="vertical-row">
 
+                <!-- ************ CAMERA SETTINGS ************ -->
+                <label width="100%" I18N="In the display settings" text="Camera Settings"/>
+
+                <spacer width="5" height="2%"/>
+
+                <!-- ************ EXTRA UI ELEMENTS SETTINGS ************ -->
+                <div width="100%" height="fit" layout="horizontal-row">
+                    <spacer width="3%" height="100%" />
+                    <spinner id="camera_preset" width="10f" align="center" />
+                    <label height="100%" x="0" y="0" I18N="In the ui settings" text="Camera"/>
+                    <spacer width="2%" height="100%" />
+                    <button id="custom_camera" text="Custom..." I18N="In the ui settings" align="center"/>
+                </div>
+
+                <spacer width="5" height="2%"/>
+
+
+                <div layout="horizontal-row" width="100%" height="fit">
+                    <spacer width="3%" height="100%" />
+                    <spinner id="splitscreen_method" width="10f" align="center" />
+                    <label id="splitscreen_text" height="100%" x="0" y="0" I18N="In the ui settings" text="Splitscreen Multiplayer layout"/>
+                </div>
+
+                <spacer width="5" height="3%"/>
+
                 <!-- ************ RESOLUTION CHOICE ************ -->
-                <label width="100%" I18N="In the display settings" text="Resolution"/>
+                <label id="resolution_text" width="100%" I18N="In the display settings" text="Resolution"/>
 
                 <spacer width="5" height="1%"/>
 
@@ -65,30 +88,6 @@
                     <spacer width="5%" height="100%" />
                     <button id="apply_resolution"
                         I18N="In the display settings" text="Apply new resolution" />
-                </div>
-
-                <!-- ************ CAMERA SETTINGS ************ -->
-                <spacer width="5" height="3%"/>
-
-                <label width="100%" I18N="In the display settings" text="Camera Settings"/>
-
-                <spacer width="5" height="2%"/>
-
-                <!-- ************ EXTRA UI ELEMENTS SETTINGS ************ -->
-                <div width="100%" height="fit" layout="horizontal-row">
-                    <spacer width="3%" height="100%" />
-                    <spinner id="camera_preset" width="10f" align="center" />
-                    <label height="100%" x="0" y="0" I18N="In the ui settings" text="Camera"/>
-                    <spacer width="2%" height="100%" />
-                    <button id="custom_camera" text="Custom..." I18N="In the ui settings" align="center"/>
-                </div>
-
-                <spacer width="5" height="2%"/>
-
-                <div layout="horizontal-row" width="100%" height="fit">
-                    <spacer width="3%" height="100%" />
-                    <spinner id="splitscreen_method" width="10f" align="center" />
-                    <label height="100%" x="0" y="0" I18N="In the ui settings" text="Splitscreen Multiplayer layout"/>
                 </div>
             </box>
         </div>

@@ -53,7 +53,7 @@
 #include "states_screens/online/online_profile_achievements.hpp"
 #include "states_screens/online/online_profile_servers.hpp"
 #include "states_screens/online/online_screen.hpp"
-#include "states_screens/options/options_screen_general.hpp"
+#include "states_screens/options/options_screen_audio.hpp"
 #include "states_screens/state_manager.hpp"
 #include "states_screens/options/user_screen.hpp"
 #if DEBUG_MENU_ITEM
@@ -78,6 +78,70 @@
 
 using namespace GUIEngine;
 using namespace Online;
+
+
+#ifdef ANDROID
+extern bool Android_isHardwareKeyboardConnected();
+extern std::string Android_getTrackPackInfo();
+extern void Android_requestTrackPack();
+#endif
+
+namespace
+{
+    /** Turns internet access on straight from the "no internet" message and
+     *  continues to the screen the player wanted, instead of sending them to
+     *  the options first. */
+    class EnableInternetListener : public MessageDialog::IConfirmDialogListener
+    {
+        bool m_online;
+    public:
+        EnableInternetListener(bool online) : m_online(online) {}
+        virtual void onConfirm()
+        {
+            GUIEngine::ModalDialog::dismiss();
+            UserConfigParams::m_internet_status = RequestManager::IPERM_ALLOWED;
+            if (!RequestManager::isRunning())
+                RequestManager::get()->startNetworkThread();
+            NewsManager::get()->init(false);
+            user_config->saveConfig();
+            if (m_online)
+                OnlineScreen::getInstance()->push();
+            else
+                AddonsScreen::getInstance()->push();
+        }
+        virtual void onCancel() { GUIEngine::ModalDialog::dismiss(); }
+    };   // EnableInternetListener
+
+#ifdef ANDROID
+    /** Asked once per start of the game, before singleplayer or story mode,
+     *  if more tracks can be downloaded from Google Play. */
+    bool g_track_pack_offered = false;
+
+    class TrackPackListener : public MessageDialog::IConfirmDialogListener
+    {
+        GUIEngine::Widget* m_widget;
+        std::string        m_name;
+    public:
+        TrackPackListener(GUIEngine::Widget* widget, const std::string& name)
+                        : m_widget(widget), m_name(name) {}
+        virtual void onConfirm()
+        {
+            GUIEngine::ModalDialog::dismiss();
+            // The game restarts after the download, keep all progress
+            user_config->saveConfig();
+            PlayerManager::get()->save();
+            Android_requestTrackPack();
+        }
+        virtual void onCancel()
+        {
+            GUIEngine::ModalDialog::dismiss();
+            // Continue to the screen the player wanted
+            MainMenuScreen::getInstance()->eventCallback(m_widget, m_name,
+                                                         PLAYER_ID_GAME_MASTER);
+        }
+    };   // TrackPackListener
+#endif
+}   // namespace
 
 // ----------------------------------------------------------------------------
 
@@ -164,9 +228,10 @@ void MainMenuScreen::init()
     input_manager->getDeviceManager()->clearLatestUsedDevice();
 
 #ifndef SERVER_ONLY
-    if (addons_manager && addons_manager->isLoading())
+    IconButtonWidget* addons_button = getWidget<IconButtonWidget>("addons");
+    if (addons_button && addons_manager && addons_manager->isLoading())
     {
-        IconButtonWidget* w = getWidget<IconButtonWidget>("addons");
+        IconButtonWidget* w = addons_button;
         w->setActive(false);
         w->resetAllBadges();
         w->setBadge(LOADING_BADGE);
@@ -176,7 +241,9 @@ void MainMenuScreen::init()
     NewsManager::get()->resetNewsPtr(NewsManager::NTYPE_MAINMENU);
 
     core::stringw important_message = L"";
-    int news_len = NewsManager::get()->getNewsCount(NewsManager::NTYPE_MAINMENU);
+    // The news come from the servers of the upstream project and are about
+    // that project, so they are not shown in this game
+    int news_len = 0;
     int chosen_id = -1;
 
     // Iterate through every news
@@ -208,26 +275,9 @@ void MainMenuScreen::init()
     // Check if there's new news
 
     IconButtonWidget* online_icon = getWidget<IconButtonWidget>("online");
+    // No "new news" badge, the news list is not shown in this game
     if (online_icon != NULL)
-    {
-        NewsManager::get()->resetNewsPtr(NewsManager::NTYPE_LIST);
         online_icon->resetAllBadges();
-
-        int news_list_len = NewsManager::get()->getNewsCount(NewsManager::NTYPE_LIST);
-
-        while (news_list_len--)
-        {
-            int id = NewsManager::get()->getNextNewsID(NewsManager::NTYPE_LIST);
-
-            if (UserConfigParams::m_news_list_shown_id < id)
-            {
-                online_icon->setBadge(REDDOT_BADGE);
-            }
-        }
-        
-        // Back to the first news
-        NewsManager::get()->getNextNewsID(NewsManager::NTYPE_LIST);
-    }
 
     m_news_text = L"";
     LabelWidget* w = getWidget<LabelWidget>("info_addons");
@@ -295,7 +345,8 @@ void MainMenuScreen::onUpdate(float delta)
         // Concatrate adjacent unimportant messages together
         m_news_text = L"";
         
-        int news_count = NewsManager::get()->getNewsCount(NewsManager::NTYPE_MAINMENU);
+        // No upstream news in this game, see init()
+        int news_count = 0;
 
         while (news_count--)
         {
@@ -324,7 +375,7 @@ void MainMenuScreen::onUpdate(float delta)
     if(PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_GUEST  ||
        PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_SIGNED_IN)
     {
-        m_user_id->setText(player->getLastOnlineName() + "@stk");
+        m_user_id->setText(player->getLastOnlineName());
     }
     else if (PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_SIGNED_OUT)
     {
@@ -387,6 +438,24 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
     // ---- A ribbon icon was clicked
     std::string selection =
         ribbon->getSelectionIDString(PLAYER_ID_GAME_MASTER);
+
+#ifdef ANDROID
+    if ((selection == "new" || selection == "story") && !g_track_pack_offered)
+    {
+        g_track_pack_offered = true;
+        const std::string info = Android_getTrackPackInfo();
+        std::vector<std::string> parts = StringUtils::split(info, ' ');
+        if (parts.size() == 2)
+        {
+            new MessageDialog(_("Get %s more tracks? They are a free %s MB "
+                "download from Google Play.", parts[0].c_str(),
+                parts[1].c_str()),
+                MessageDialog::MESSAGE_DIALOG_YESNO,
+                new TrackPackListener(widget, name), true);
+            return;
+        }
+    }
+#endif
 
     /*
     if (selection == "story")
@@ -545,6 +614,22 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
     }
     else if (selection == "multiplayer")
     {
+#ifdef MOBILE_STK
+        // The touch screen only drives one kart, every other player needs
+        // a gamepad or keyboard. Say so instead of opening a screen where
+        // nobody can join.
+        bool has_keyboard = false;
+#ifdef ANDROID
+        has_keyboard = Android_isHardwareKeyboardConnected();
+#endif
+        if (input_manager->getDeviceManager()->getGamePadAmount() == 0 &&
+            !has_keyboard)
+        {
+            new MessageDialog(_("Splitscreen multiplayer needs a gamepad or "
+                "keyboard for every extra player. Connect one and try again."));
+            return;
+        }
+#endif
         KartSelectionScreen* s = OfflineKartSelectionScreen::getInstance();
         NetworkConfig::get()->unsetNetworking();
         s->setMultiplayer(true);
@@ -553,7 +638,7 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
     }
     else if (selection == "options")
     {
-        OptionsScreenGeneral::getInstance()->push();
+        OptionsScreenAudio::getInstance()->push();
     }
     else if (selection == "quit")
     {
@@ -620,9 +705,10 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
     {
         if(UserConfigParams::m_internet_status!=RequestManager::IPERM_ALLOWED)
         {
-            new MessageDialog(_("You can not play online without internet access. "
-                                "If you want to play online, go in the options menu, "
-                                "and check \"Connect to the Internet\"."));
+            new MessageDialog(_("Playing online needs internet access. "
+                                "Turn on internet access now?"),
+                              MessageDialog::MESSAGE_DIALOG_YESNO,
+                              new EnableInternetListener(true), true);
             return;
         }
         OnlineScreen::getInstance()->push();
@@ -635,9 +721,10 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
         {
             if (!addons_manager->anyAddonsInstalled())
             {
-                new MessageDialog(_("You can not download addons without internet access. "
-                                    "If you want to download addons, go in the options menu, "
-                                    "and check \"Connect to the Internet\"."));
+                new MessageDialog(_("Downloading addons needs internet "
+                                    "access. Turn on internet access now?"),
+                                  MessageDialog::MESSAGE_DIALOG_YESNO,
+                                  new EnableInternetListener(false), true);
                 return;
             }
             else

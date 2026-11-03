@@ -275,6 +275,17 @@ void OptionsScreenUI::init()
         }
     }
     speedrun_timer->setState( UserConfigParams::m_speedrun_mode );
+
+    // The game keeps its own skin, and the FPS counter and timers are for
+    // testing and speedrunning, so only the useful settings are shown
+    const char* hidden_rows[] = { "skin_row", "skin_variant_row",
+        "showfps_row", "story_timer_row", "speedrun_timer_row" };
+    for (const char* row : hidden_rows)
+    {
+        Widget* w = getWidget(row);
+        if (w)
+            w->setVisible(false);
+    }
 }   // init
 
 // -----------------------------------------------------------------------------

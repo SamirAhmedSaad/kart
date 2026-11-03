@@ -96,8 +96,9 @@ void RegisterScreen::init()
         ribbon->select("tab_offline", PLAYER_ID_GAME_MASTER);
     }
 
-    // Hide the tabs in case of a rename
-    ribbon->setVisible(m_existing_player == NULL);
+    // This game is offline only, so there is no choice between online and
+    // offline accounts to show
+    ribbon->setVisible(false);
     Screen::init();
 
     // If there is no player (i.e. first start of STK), try to pick

@@ -97,7 +97,8 @@ void TracksAndGPScreen::eventCallback(Widget* widget, const std::string& name,
         if (track)
         {
             // In favorite edit mode, switch the status of the selected track
-            if (getWidget<CheckBoxWidget>("favorite")->getState())
+            CheckBoxWidget* favorite_cb = getWidget<CheckBoxWidget>("favorite");
+            if (favorite_cb && favorite_cb->getState())
             {
                 if(PlayerManager::getCurrentPlayer()->isFavoriteTrack(track->getIdent()))
                     PlayerManager::getCurrentPlayer()->removeFavoriteTrack(track->getIdent());
@@ -171,8 +172,28 @@ void TracksAndGPScreen::beforeAddingWidget()
     tabs->clearAllChildren();
 
     CheckBoxWidget* favorite_cb = getWidget<CheckBoxWidget>("favorite");
-    assert( favorite_cb != NULL );
-    favorite_cb->setState(false);
+    if (favorite_cb)
+        favorite_cb->setState(false);
+
+    // Only show the Grand Prix row when there is a Grand Prix to pick, it
+    // needs tracks which may not be installed (e.g. the extra track pack)
+    grand_prix_manager->checkConsistency();
+    bool has_gp = false;
+    for (unsigned int n = 0; n < grand_prix_manager->getNumberOfGrandPrix(); n++)
+    {
+        if (grand_prix_manager->getGrandPrix(n)->getNumberOfTracks() > 0)
+        {
+            has_gp = true;
+            break;
+        }
+    }
+    Widget* gp_section = getWidget("gp_section");
+    if (gp_section)
+    {
+        gp_section->m_properties[PROP_PROPORTION] = has_gp ? "3" : "0";
+        gp_section->setVisible(has_gp);
+        calculateLayout();
+    }
 
     const std::vector<std::string>& groups = track_manager->getAllTrackGroups();
     const int group_amount = (int)groups.size();
@@ -214,9 +235,13 @@ void TracksAndGPScreen::init()
     DynamicRibbonWidget* tracks_widget = getWidget<DynamicRibbonWidget>("tracks");
     assert(tracks_widget != NULL);
 
+    // The search box is not part of the touch screen layout
     m_search_box = getWidget<TextBoxWidget>("search");
-    m_search_box->clearListeners();
-    m_search_box->addListener(this);
+    if (m_search_box)
+    {
+        m_search_box->clearListeners();
+        m_search_box->addListener(this);
+    }
 
     // Reset GP list everytime (accounts for locking changes, etc.)
     gps_widget->clearItems();
@@ -311,7 +336,8 @@ void TracksAndGPScreen::buildTrackList()
             if (RaceManager::get()->getMinorMode() == RaceManager::MINOR_MODE_EASTER_EGG
                 && !curr->hasEasterEggs())
                 continue;
-            core::stringw search_text = m_search_box->getText();
+            core::stringw search_text =
+                m_search_box ? m_search_box->getText() : core::stringw();
             search_text.make_lower();
             if (!search_text.empty() &&
                 curr->getName().make_lower().find(search_text.c_str()) == -1)
@@ -332,7 +358,8 @@ void TracksAndGPScreen::buildTrackList()
             if (RaceManager::get()->getMinorMode() == RaceManager::MINOR_MODE_EASTER_EGG
                 && !curr->hasEasterEggs())
                 continue;
-            core::stringw search_text = m_search_box->getText();
+            core::stringw search_text =
+                m_search_box ? m_search_box->getText() : core::stringw();
             search_text.make_lower();
             if (!search_text.empty() &&
                 curr->getName().make_lower().find(search_text.c_str()) == -1)

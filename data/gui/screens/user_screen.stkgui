@@ -16,7 +16,7 @@
                 <div width="100%" height="fit" layout="horizontal-row" >
                     <checkbox width="fit" id="online" I18N="In the user screen" text_align="left"/>
                     <spacer width="10"/>
-                    <label proportion="1" height="100%" text_align="left" I18N="In the user screen" text="Online"/>
+                    <label proportion="1" id="label_online" height="100%" text_align="left" I18N="In the user screen" text="Online"/>
                 </div>
                 <div width="100%" height="fit" layout="horizontal-row" >
                     <checkbox width="fit" id="remember-user" I18N="In the user screen" text_align="left"/>

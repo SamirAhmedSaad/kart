@@ -272,6 +272,7 @@ extern "C" {
 #include "replay/replay_play.hpp"
 #include "replay/replay_recorder.hpp"
 #include "states_screens/main_menu_screen.hpp"
+#include "states_screens/dialogs/welcome_dialog.hpp"
 #include "states_screens/online/networking_lobby.hpp"
 #include "states_screens/online/register_screen.hpp"
 #include "states_screens/state_manager.hpp"
@@ -299,6 +300,9 @@ extern "C" {
 static void cleanSuperTuxKart();
 static void cleanUserConfig();
 void runUnitTests();
+#ifdef ANDROID
+std::string Android_getTrackPackPath();
+#endif
 
 // ============================================================================
 //                        gamepad visualisation screen
@@ -1907,6 +1911,12 @@ void initUserConfig()
     file_manager = new FileManager();
     user_config  = new UserConfig();     // needs file_manager
     user_config->loadConfig();
+#ifndef SERVER_ONLY
+    // This game is single player only: no online play, addons or news, so
+    // never connect to the internet (this also skips asking about it)
+    UserConfigParams::m_internet_status =
+        Online::RequestManager::IPERM_NOT_ALLOWED;
+#endif
     // Some parts of the file manager needs user config (paths for models
     // depend on artist debug flag). So init the rest of the file manager
     // after reading the user config file.
@@ -2069,6 +2079,17 @@ void initRest()
         kart_properties_manager->loadCharacteristics(&characteristicsNode);
     }
 
+#ifdef ANDROID
+    // Tracks of the on-demand track pack downloaded from Google Play
+    {
+        const std::string pack = Android_getTrackPackPath();
+        if (!pack.empty())
+        {
+            Log::info("main", "Using track pack in '%s'.", pack.c_str());
+            track_manager->addTrackSearchDir(pack + "/tracks/");
+        }
+    }
+#endif
     track_manager->loadTrackList();
     stk_config->validateBenchmarkReplays();
     music_manager->addMusicToTracks();
@@ -2144,10 +2165,10 @@ void askForInternetPermission()
     };   // ConfirmServer
 
     MessageDialog *dialog =
-    new MessageDialog(_("SuperTuxKart may connect to a server "
-        "to download add-ons and notify you of updates.") + L"\n\n"
+    new MessageDialog(_("Kart Race may connect to online servers "
+        "to download add-ons and to play online.") + L"\n\n"
         + _("Please read our privacy policy at %s.",
-            StringUtils::utf8ToWide(stk_config->m_privacy_url))
+            StringUtils::utf8ToWide(stk_config->m_game_privacy_url))
         + L"\n\n" + _("Would you like this feature to be enabled? (To change this setting "
         "at a later time, go to options, select tab "
         "'General', and edit \"Connect to the Internet\")."),
@@ -2472,6 +2493,13 @@ int main(int argc, char *argv[])
             else
             {
                 irr_driver->getDevice()->setWindowMinimumSize(480, 480);
+            }
+            // Welcome and privacy screen, before any other first start
+            // question
+            if (WelcomeDialog::needsToBeShown())
+            {
+                GUIEngine::DialogQueue::get()->pushDialog(
+                    new WelcomeDialog());
             }
             #ifdef MOBILE_STK
             if (UserConfigParams::m_multitouch_controls == MULTITOUCH_CONTROLS_UNDEFINED)

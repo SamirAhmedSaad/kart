@@ -192,6 +192,15 @@ void KartSelectionScreen::beforeAddingWidget()
         getWidget("continue")->setVisible(false);
     }
 
+    // The kart class, search and favorite filters only clutter the screen
+    // for the few karts of this game, so they are hidden
+    Widget* filters = getWidget("kart_filters");
+    if (filters)
+    {
+        filters->m_properties[GUIEngine::PROP_HEIGHT] = "1";
+        filters->setVisible(false);
+    }
+
     calculateLayout();
 
     CheckBoxWidget* favorite_cb = getWidget<CheckBoxWidget>("favorite");

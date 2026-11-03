@@ -46,7 +46,7 @@
 #include "states_screens/race_gui_base.hpp"
 #include "states_screens/race_gui_multitouch.hpp"
 #include "states_screens/race_setup_screen.hpp"
-#include "states_screens/options/options_screen_general.hpp"
+#include "states_screens/options/options_screen_audio.hpp"
 #include "states_screens/state_manager.hpp"
 #include "utils/string_utils.hpp"
 #include "utils/translation.hpp"
@@ -158,7 +158,15 @@ RacePausedDialog::RacePausedDialog(const float percentWidth,
             {
                 getWidget<IconButtonWidget>("newrace")->setLabel(_("Setup New Race"));
                 if (getWidget<IconButtonWidget>("restart"))
+                {
+#ifdef MOBILE_STK
+                    // Short label, the long one runs into "Give Up Race"
+                    // on phone screens
+                    getWidget<IconButtonWidget>("restart")->setLabel(_("Restart"));
+#else
                     getWidget<IconButtonWidget>("restart")->setLabel(_("Restart Race"));
+#endif
+                }
             }
             getWidget<IconButtonWidget>("exit")->setLabel(_("Exit Race"));
         }
@@ -228,6 +236,15 @@ void RacePausedDialog::loadedFromFile()
         {
             choice_ribbon->deleteChild("restart");
         }
+    }
+
+    // Keep the pause menu short like other mobile racing games: giving up
+    // is the same as exiting for the player, and help is in the main menu
+    {
+        GUIEngine::RibbonWidget* choice_ribbon =
+            getWidget<GUIEngine::RibbonWidget>("choiceribbon");
+        choice_ribbon->deleteChild("endrace");
+        choice_ribbon->deleteChild("help");
     }
 
     // Remove all extraneous buttons in benchmark mode
@@ -388,7 +405,7 @@ GUIEngine::EventPropagation
         {
             dismiss();
 #ifndef SERVER_ONLY
-            OptionsScreenGeneral::getInstance()->push();
+            OptionsScreenAudio::getInstance()->push();
 #endif
             return GUIEngine::EVENT_BLOCK;
         }

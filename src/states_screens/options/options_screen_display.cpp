@@ -159,6 +159,15 @@ void OptionsScreenDisplay::init()
     GUIEngine::SpinnerWidget* splitscreen_method = getWidget<GUIEngine::SpinnerWidget>("splitscreen_method");
     assert( splitscreen_method != NULL );
     splitscreen_method->setValue(UserConfigParams::m_split_screen_horizontally ? 1 : 0);
+
+    // There is no splitscreen in this single player game, and a phone only
+    // offers its own resolution, so only the camera settings are shown
+    splitscreen_method->setVisible(false);
+    getWidget<LabelWidget>("splitscreen_text")->setVisible(false);
+#if defined(MOBILE_STK) || defined(__SWITCH__)
+    res->setVisible(false);
+    getWidget<LabelWidget>("resolution_text")->setVisible(false);
+#endif
 }   // init
 
 // --------------------------------------------------------------------------------------------

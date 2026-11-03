@@ -2,14 +2,12 @@
 <stkgui>
     <icon-button id="back" x="1%" y="0" height="9%" icon="gui/icons/back.png"/>
     <div x="1%" y="1%" width="98%" height="98%" layout="vertical-row" >
-        <header width="80%" height="8%" align="center" text="SuperTuxKart Options" text_align="center"/>
+        <header width="80%" height="8%" align="center" text="Options" text_align="center"/>
         <spacer width="100%" height="1%"/>
 
         <div width="100%" height="91%" layout="horizontal-row" >
 
             <vertical-tabs id="options_choice" height="100%" width="20%">
-                <icon-button id="tab_general" width="128" height="128" icon="gui/icons/options_general.png"
-                        I18N="Section in the settings menu" text="General"/>
                 <icon-button id="tab_display" width="128" height="128" icon="gui/icons/options_display.png"
                         I18N="Section in the settings menu" text="Display"/>
                 <icon-button id="tab_video" width="128" height="128" icon="gui/icons/options_video.png"

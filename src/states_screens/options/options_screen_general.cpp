@@ -57,22 +57,12 @@ void OptionsScreenGeneral::init()
     ribbon->setFocusForPlayer(PLAYER_ID_GAME_MASTER);
     ribbon->select( "tab_general", PLAYER_ID_GAME_MASTER );
 
-    CheckBoxWidget* internet_enabled = getWidget<CheckBoxWidget>("enable-internet");
-    assert( internet_enabled != NULL );
-    internet_enabled->setState( UserConfigParams::m_internet_status
-                                     ==RequestManager::IPERM_ALLOWED );
-
-    setInternetCheckboxes(internet_enabled->getState());
-
+    // This game is offline only, so there are no internet options to show
     CheckBoxWidget* handicap = getWidget<CheckBoxWidget>("enable-handicap");
     assert( handicap != NULL );
     handicap->setState( UserConfigParams::m_per_player_difficulty );
     // I18N: Tooltip in the UI menu. Use enough linebreaks to make sure the text fits the screen in low resolutions.
     handicap->setTooltip(_("In multiplayer mode, players can select handicapped\n(more difficult) profiles on the kart selection screen"));
-
-    CheckBoxWidget* show_login = getWidget<CheckBoxWidget>("show-login");
-    assert( show_login!= NULL );
-    show_login->setState( UserConfigParams::m_always_show_login_screen);
 
     OptionsCommon::setTabStatus();
 
@@ -93,6 +83,10 @@ void OptionsScreenGeneral::init()
         getWidget("assets_settings")->setActive(false);
     else
         getWidget("assets_settings")->setActive(true);
+    // The full assets pack is the upstream project's download, it is not
+    // offered in this game (extra tracks come from Google Play instead)
+    if (!ExtractMobileAssets::hasFullAssets())
+        getWidget("assets_settings")->setVisible(false);
 #else
     getWidget("assets_settings")->setVisible(false);
 #endif
