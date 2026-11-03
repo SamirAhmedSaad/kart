@@ -628,17 +628,17 @@ void RacePausedDialog::updateTouchDeviceIcon()
     case MULTITOUCH_CONTROLS_STEERING_WHEEL:
         widget->setLabel(_("Steering wheel"));
         widget->setImage(irr_driver->getTexture(FileManager::GUI_ICON,
-                                                "android/steering_wheel.png"));
+                                                "tile_steering_wheel.png"));
         break;
     case MULTITOUCH_CONTROLS_ACCELEROMETER:
         widget->setLabel(_("Accelerometer"));
         widget->setImage(irr_driver->getTexture(FileManager::GUI_ICON,
-                                                "android/accelerator_icon.png"));
+                                                "tile_accelerator_icon.png"));
         break;
     case MULTITOUCH_CONTROLS_GYROSCOPE:
         widget->setLabel(_("Gyroscope"));
         widget->setImage(irr_driver->getTexture(FileManager::GUI_ICON,
-                                                "android/gyroscope_icon.png"));
+                                                "tile_gyroscope_icon.png"));
         break;
     default:
         break;

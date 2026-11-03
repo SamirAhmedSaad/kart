@@ -1,0 +1,61 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: SuperTuxKart
+Upstream-Contact:
+ Marianne Gagnon <auria.mg@gmail.com>
+ Jean-Manuel Clémençon <sam.un@protonmail.com>
+Source: https://supertuxkart.net
+
+Files:
+ src/Inter-UI-Black.ttf
+Copyright: Copyright 2018 The Inter UI project authors
+License: OFL 1.1 (SIL Open Font License, Version 1.1)
+Comment: Specifically using version 2.5 of the font, later versions have a different look
+
+Files:
+ src/NotoSans*
+Copyright: Copyright 2015-2016 Google Inc. All Rights Reserved.
+License: This Font Software is licensed under the SIL Open Font License, Version 1.1. This Font Software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software.
+Comment: Bold/Black versions of the language-specific fonts used in the other skins
+
+Files: *
+Copyright: Copyright 2018-2020 LCP and QwertyChouskie
+License: CC-BY-SA 4.0
+Comment: Original style, most icons, and some elements by LCP, skin finished by QwertyChouskie
+
+Files:
+ data/gui/icons/menu_race.png
+ data/gui/icons/menu_race_focus.png
+ data/gui/icons/menu_multi.png
+ data/gui/icons/menu_multi_focus.png
+ data/gui/icons/menu_story.png
+ data/gui/icons/menu_story_focus.png
+ data/gui/icons/main_race.png
+ data/gui/icons/tutorial.png
+Copyright: 2026 Kart Race contributors
+License: CC-BY-SA 4.0
+Comment: Kartwheel versions of the Cartoon skin menu icons.
+
+Files:
+ button.png button_focused.png button_inactive.png
+ tab.png tab_focus.png tab_vert.png tab_vert_focus.png
+ checkbox.png checkbox_checked.png checkbox_focus.png checkbox_checked_focus.png
+ spinner.png spinner_focus.png spinner_deactivated.png
+Copyright: Kenney (www.kenney.nl), recolored by Kart Race contributors
+License: CC0 1.0
+Comment: From the Kenney UI Pack 2.0.
+
+Files:
+ bubble.png
+ dialog_solid.png
+ glass_iconhighlight_focus.png
+ glass_square_focused_gold.png
+ section_solid.png
+Copyright: 2026 Kart Race contributors
+License: CC-BY-SA 4.0
+Comment: Drawn with ImageMagick for the Kart Race skin, see readme.txt.
+
+Files:
+ data/gui/icons/tile_*.png
+Copyright: 2026 Kart Race contributors, plus the authors of the icon in each tile
+License: same as the Cartoon skin icon each tile is made from
+Comment: The Cartoon skin icons (back, restart, main_quit, main_options, green_check, red_x, android/steering_wheel, android/accelerator_icon, android/gyroscope_icon, and this skin's main_race) placed on a purple tile, see readme.txt.
