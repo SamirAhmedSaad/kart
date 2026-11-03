@@ -34,7 +34,6 @@ private:
     friend class GUIEngine::ScreenSingleton<MainMenuScreen>;
 
     /** Keep the widget to to the user name. */
-    GUIEngine::ButtonWidget *m_user_id;
 
     core::stringw m_news_text;
 

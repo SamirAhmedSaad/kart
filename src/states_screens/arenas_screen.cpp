@@ -61,9 +61,11 @@ void ArenasScreen::beforeAddingWidget()
     // Add user-defined group to track groups
     track_manager->setFavoriteTrackStatus(PlayerManager::getCurrentPlayer()->getFavoriteTrackStatus());
 
+    // The search box and the favorite arena filter are not part of the
+    // touch screen layout
     CheckBoxWidget* favorite_cb = getWidget<CheckBoxWidget>("favorite");
-    assert( favorite_cb != NULL );
-    favorite_cb->setState(false);
+    if (favorite_cb)
+        favorite_cb->setState(false);
 
     // Dynamically add tabs
     RibbonWidget* tabs = this->getWidget<RibbonWidget>("trackgroups");
@@ -137,8 +139,11 @@ void ArenasScreen::init()
     Screen::init();
 
     m_search_box = getWidget<TextBoxWidget>("search");
-    m_search_box->clearListeners();
-    m_search_box->addListener(this);
+    if (m_search_box)
+    {
+        m_search_box->clearListeners();
+        m_search_box->addListener(this);
+    }
 
     buildTrackList();
     DynamicRibbonWidget* w = this->getWidget<DynamicRibbonWidget>("tracks");
@@ -183,7 +188,8 @@ void ArenasScreen::eventCallback(Widget* widget, const std::string& name, const 
         if (clicked_track)
         {
             // In favorite edit mode, switch the status of the selected track
-            if (getWidget<CheckBoxWidget>("favorite")->getState())
+            CheckBoxWidget* favorite_cb = getWidget<CheckBoxWidget>("favorite");
+            if (favorite_cb && favorite_cb->getState())
             {
                 if(PlayerManager::getCurrentPlayer()->isFavoriteTrack(clicked_track->getIdent()))
                     PlayerManager::getCurrentPlayer()->removeFavoriteTrack(clicked_track->getIdent());
@@ -242,7 +248,8 @@ void ArenasScreen::buildTrackList()
         {
             Track* curr = track_manager->getTrack(n);
             
-            core::stringw search_text = m_search_box->getText();
+            core::stringw search_text =
+                m_search_box ? m_search_box->getText() : core::stringw();
             search_text.make_lower();
             if (!search_text.empty() &&
                 curr->getName().make_lower().find(search_text.c_str()) == -1)
@@ -286,7 +293,8 @@ void ArenasScreen::buildTrackList()
         {
             Track* curr = track_manager->getTrack(currArenas[n]);
 
-            core::stringw search_text = m_search_box->getText();
+            core::stringw search_text =
+                m_search_box ? m_search_box->getText() : core::stringw();
             search_text.make_lower();
             if (!search_text.empty() &&
                 curr->getName().make_lower().find(search_text.c_str()) == -1)

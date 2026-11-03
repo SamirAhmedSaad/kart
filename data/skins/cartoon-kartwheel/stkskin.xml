@@ -27,10 +27,9 @@ Here you can configure advanced theming rules for this skin
       left_border="130" right_border="13" top_border="13" bottom_border="13"
       preserve_h_aspect_ratios="true" hborder_out_portion="0" vborder_out_portion="0"/>
 
-<!-- Provided by base theme
 <element type="error-message" image="error.png"
       left_border="130" right_border="13" top_border="13" bottom_border="13"
-      preserve_h_aspect_ratios="true" hborder_out_portion="0" vborder_out_portion="0"/>-->
+      preserve_h_aspect_ratios="true" hborder_out_portion="0" vborder_out_portion="0"/>
 
 <element type="generic-message" image="generic.png"
       left_border="130" right_border="13" top_border="13" bottom_border="13"
@@ -195,10 +194,9 @@ Here you can configure advanced theming rules for this skin
 <element type="gaugefillrainbow" common="y" image="gauge_fill_rainbow.png"/>-->
 
 <!-- Lists are always in neutral state for now -->
-<!-- Provided by base theme
-<element type="list" image="section.png"
-    left_border="15" right_border="15" top_border="7" bottom_border="7"
-    hborder_out_portion="0.0" vborder_out_portion="0.0" />-->
+<element type="list" image="section_solid.png"
+    left_border="16" right_border="16" top_border="16" bottom_border="16"
+    hborder_out_portion="0.0" vborder_out_portion="0.0" />
     
 <element type="listitem" state="focused" image="select.png"
     left_border="0" right_border="0" top_border="0" bottom_border="0"
@@ -223,14 +221,13 @@ Here you can configure advanced theming rules for this skin
 <element type="left_arrow"  state="focus"   image="left_arrow_focus.png" />
 <element type="right_arrow" state="focus"   image="right_arrow_focus.png" />
 
-<!-- Provided by base theme
-<element type="list_header"  state="neutral" image="table_header.png" />-->
+<element type="list_header"  state="neutral" image="table_header.png" />
 <element type="list_sort_up" state="neutral" image="up_arrow.png" />
 <element type="list_sort_down" state="neutral" image="down_arrow.png" />
 <element type="list_header"  state="down"    image="table_header_down.png" />
 
 <!-- Stateless -->
-<!-- Solid panels with a thick frame, so their contents stand out from the background -->
+<!-- Dark panels with a light frame, so white text reads clearly on them -->
 <element type="section" image="section_solid.png"
       left_border="16" right_border="16" top_border="16" bottom_border="16"
       hborder_out_portion="0.0" vborder_out_portion="0.0" />
@@ -244,13 +241,12 @@ Here you can configure advanced theming rules for this skin
       hborder_out_portion="0.0" vborder_out_portion="0.0" />-->
 
 <!-- Stateless -->
-<!-- Provided by base theme
 <element type="rounded_section" image="rsection.png"
       left_border="15" right_border="15" top_border="15" bottom_border="15"
-      hborder_out_portion="0.0" vborder_out_portion="0.0" />-->
+      hborder_out_portion="0.0" vborder_out_portion="0.0" />
 
 <!-- Stateless -->
-<!-- Light panel with a thick purple frame, like the other panels -->
+<!-- Dark panel with a light purple frame, like the other panels -->
 <element type="window" image="dialog_solid.png"
       left_border="40" right_border="40" top_border="40" bottom_border="40"
       hborder_out_portion="0.0" vborder_out_portion="0.0" />
@@ -260,30 +256,29 @@ Here you can configure advanced theming rules for this skin
       hborder_out_portion="1.0" vborder_out_portion="1.0" />-->
 
 <!-- Stateless -->
-<!-- Provided by base theme
 <element type="tooltip" image="tooltip.png"
     left_border="10" right_border="10" top_border="10" bottom_border="10"
-    hborder_out_portion="1.5" vborder_out_portion="1.0" />-->
+    hborder_out_portion="1.5" vborder_out_portion="1.0" />
     
 <!--                   Colors                  -->
-<color type="text" state="neutral" r="0" g="0" b="0" />
+<color type="text" state="neutral" r="255" g="255" b="255" />
 <color type="brighttext" state="neutral" r="255" g="46" b="136" />
 
 <!-- For highlighted items, e.g. in list -->
 <color type="text" state="focused" r="255" g="255" b="255" />
 
 <!-- Color used in the credits -->
-<color type="credits_text" state="neutral" r="34" g="18" b="64" />
+<color type="credits_text" state="neutral" r="255" g="255" b="255" />
 
 <!-- Color used for emphasized items in e.g. lists -->
-<color type="emphasis_text" state="neutral" r="124" g="58" b="237" />
+<color type="emphasis_text" state="neutral" r="255" g="210" b="63" />
 <color type="emphasis_text" state="focused" r="255" g="46" b="136" />
 
 <!-- Color used for red/blue items in list (e.g. player team color in networking) -->
-<color type="list_blue" state="neutral" r="0" g="0" b="255" />
-<color type="list_blue" state="focused" r="0" g="0" b="255" />
-<color type="list_red" state="neutral" r="255" g="0" b="0" />
-<color type="list_red" state="focused" r="255" g="0" b="0" />
+<color type="list_blue" state="neutral" r="130" g="180" b="255" />
+<color type="list_blue" state="focused" r="130" g="180" b="255" />
+<color type="list_red" state="neutral" r="255" g="120" b="120" />
+<color type="list_red" state="focused" r="255" g="120" b="120" />
 
 <!-- Color used to fade out background when a dialog is shown -->
 <color type="dialog_background" state="neutral" a="120" r="0" g="0" b="0" />
@@ -292,13 +287,13 @@ Here you can configure advanced theming rules for this skin
 <color type="tips_background" state="neutral" a="120" r="0" g="0" b="0" />
 
 <!-- Text field color -->
-<color type="text_field" state="background" a="255" r="200" g="200" b="200" />
-<color type="text_field" state="background_focused" a="255" r="255" g="232" b="243" />
-<color type="text_field" state="background_deactivated" a="255" r="200" g="200" b="200" />
+<color type="text_field" state="background" a="255" r="40" g="26" b="82" />
+<color type="text_field" state="background_focused" a="255" r="66" g="40" b="140" />
+<color type="text_field" state="background_deactivated" a="255" r="55" g="50" b="75" />
 <color type="text_field" state="background_marked" a="128" r="124" g="58" b="237" />
-<color type="text_field" state="neutral" a="255" r="138" g="138" b="138" />
-<color type="text_field" state="focused" a="255" r="255" g="46" b="136" />
-<color type="text_field" state="deactivated" a="255" r="138" g="138" b="138" />
+<color type="text_field" state="neutral" a="255" r="139" g="92" b="246" />
+<color type="text_field" state="focused" a="255" r="255" g="194" b="26" />
+<color type="text_field" state="deactivated" a="255" r="90" g="85" b="110" />
 
 <!-- Rating star image -->
 <!-- Provided by base theme

@@ -105,6 +105,7 @@ class TrackInfoScreen : public GUIEngine::Screen,
 
     void updateHighScores();
     void setSoccerWidgets(bool has_AI);
+    void updateModeGoal();
     void setSoccerTarget(bool time_limit);
     void soccerSpinnerUpdate(bool blue_spinner);
 

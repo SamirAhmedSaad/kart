@@ -2,15 +2,8 @@
 <stkgui>
     <div x="1%" y="1%" width="98%" height="8%" layout="horizontal-row" >
         <icon-button id="back" width="8%" height="100%" icon="gui/icons/back.png"/>
-        <header width="30%" height="100%" I18N="Section in arena tracks selection screen" text="Arenas"
+        <header width="84%" height="100%" I18N="Section in arena tracks selection screen" text="Arenas"
                 align="center" text_align="center" />
-        <textbox width="30%" id="search" align="center"/>
-        <spacer width="5%" height="100%" />
-        <div width="fit" height="100%" layout="horizontal-row" align="center">
-            <checkbox id="favorite" align="center"/>
-            <spacer width="5%" height="100%" />
-            <tiny-header width="fit" height="100%" I18N="Section in arena tracks selection screen" text="Edit favorite arenas"/>
-        </div>
     </div>
 
     <div x="2%" y="9%" width="96%" height="90%" layout="vertical-row" >

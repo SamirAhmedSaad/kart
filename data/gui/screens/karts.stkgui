@@ -32,7 +32,7 @@
                             child_width="120" child_height="120"/>
                     <spacer width="3%"/>
                     <!-- This is only used when a touchscreen is active, to allow previewing a kart without validating the pick. -->
-                    <icon-button id="continue" y="10%" icon="gui/icons/green_check.png" text="Continue"/>
+                    <icon-button id="continue" y="10%" width="128" height="128" icon="gui/icons/tile_start.png" text="Continue"/>
                 </div>
             </box>
             <!-- Groups will be added dynamically at runtime -->

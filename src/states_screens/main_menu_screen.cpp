@@ -204,8 +204,6 @@ void MainMenuScreen::init()
 {
     Screen::init();
 
-    m_user_id = getWidget<ButtonWidget>("user-id");
-    assert(m_user_id);
 
     // reset in case we're coming back from a race
     NetworkConfig::get()->cleanNetworkPlayers();
@@ -374,21 +372,6 @@ void MainMenuScreen::onUpdate(float delta)
     PlayerProfile *player = PlayerManager::getCurrentPlayer();
     if (!player)
         return;
-    if(PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_GUEST  ||
-       PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_SIGNED_IN)
-    {
-        m_user_id->setText(player->getLastOnlineName());
-    }
-    else if (PlayerManager::getCurrentOnlineState() == PlayerProfile::OS_SIGNED_OUT)
-    {
-        m_user_id->setText(player->getName());
-    }
-    else
-    {
-        // now must be either logging in or logging out
-        m_user_id->setText(player->getName());
-    }
-
     // Ask if user want to play tutorial when profile is newly created
     if (player->getUseFrequency() != 0)
         return;
@@ -426,12 +409,6 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
                                    const int playerID)
 {
 #ifndef SERVER_ONLY
-    if(name=="user-id")
-    {
-        UserScreen::getInstance()->push();
-        return;
-    }
-
     // most interesting stuff is in the ribbons, so start there
     RibbonWidget* ribbon = dynamic_cast<RibbonWidget*>(widget);
 
@@ -638,6 +615,10 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
         s->setFromOverworld(false);
         s->push();
     }
+    else if (selection == "players")
+    {
+        UserScreen::getInstance()->push();
+    }
     else if (selection == "options")
     {
         OptionsScreenAudio::getInstance()->push();
@@ -804,7 +785,7 @@ bool MainMenuScreen::onEscapePressed()
         }   // onConfirm
     };   // ConfirmClose
 
-    new MessageDialog(_("Are you sure you want to quit STK?"),
+    new MessageDialog(_("Are you sure you want to quit?"),
         MessageDialog::MESSAGE_DIALOG_YESNO, new ConfirmClose(),
         true/*delete_listener*/);
     return false;

@@ -119,6 +119,12 @@ void TrackInfoScreen::beforeAddingWidget()
 
     // show 'Number of blue team AI karts' if soccer
     m_ai_blue_div->setCollapsed(!(RaceManager::get()->isSoccerMode()), this);
+
+    // Modes without high scores explain what to do in the box instead, so
+    // the label gets the whole box
+    m_highscore_label->m_properties[PROP_HEIGHT] =
+        RaceManager::get()->modeHasHighscores() ? "" : "90%";
+    calculateLayout();
 } // beforeAddingWidget
 
 // ----------------------------------------------------------------------------
@@ -147,13 +153,8 @@ void TrackInfoScreen::init()
     getWidget<LabelWidget>("author")->setText( _("Track by %s", m_track->getDesigner()),
                                                false );
 
-    LabelWidget* max_players = getWidget<LabelWidget>("max-arena-players");
-    max_players->setVisible(m_track->isArena());
-    if (m_track->isArena())
-    {
-        //I18N: the max players supported by an arena.
-        max_players->setText( _("Max players supported: %d", max_arena_players), false );
-    }
+    // The number of players an arena supports only matters in multiplayer
+    getWidget<LabelWidget>("max-arena-players")->setVisible(false);
 
     // ---- Track screenshot
     GUIEngine::IconButtonWidget* screenshot = getWidget<IconButtonWidget>("screenshot");
@@ -335,9 +336,16 @@ void TrackInfoScreen::init()
     else
         m_ai_kart_spinner->setActive(true);
 
-    // ---- High Scores
-    m_highscore_label->setText(_("High Scores"), false);
-    m_highscore_label->setVisible(has_highscores);
+    // ---- High Scores, or what to do in this mode
+    if (has_highscores)
+    {
+        m_highscore_label->setText(_("High Scores"), false);
+    }
+    else
+    {
+        updateModeGoal();
+    }
+    m_highscore_label->setVisible(true);
 
     if (has_highscores)
     {
@@ -354,6 +362,44 @@ void TrackInfoScreen::init()
     bt_start->setFocusForPlayer(PLAYER_ID_GAME_MASTER);
 }   // init
 
+// ----------------------------------------------------------------------------
+/** Shows the name of the game mode and what to do in it, in place of the
+ *  high scores for modes which have none.
+ */
+void TrackInfoScreen::updateModeGoal()
+{
+    RaceManager::MinorRaceModeType mode = RaceManager::get()->getMinorMode();
+    // The battle type can be changed on this screen
+    if (m_show_ffa_spinner)
+    {
+        mode = UserConfigParams::m_use_ffa_mode ?
+            RaceManager::MINOR_MODE_FREE_FOR_ALL :
+            RaceManager::MINOR_MODE_3_STRIKES;
+    }
+
+    core::stringw goal;
+    switch (mode)
+    {
+    case RaceManager::MINOR_MODE_FOLLOW_LEADER:
+        goal = _("Keep up with the leader kart but don't overtake it!");
+        break;
+    case RaceManager::MINOR_MODE_3_STRIKES:
+        goal = _("Hit others with weapons until they lose all their lives.");
+        break;
+    case RaceManager::MINOR_MODE_FREE_FOR_ALL:
+        //I18N: In the track info screen, what to do in a free-for-all battle
+        goal = _("Hit the other karts as often as you can before the time runs out.");
+        break;
+    default:
+        break;
+    }
+    core::stringw text = RaceManager::getNameOf(mode);
+    if (!goal.empty())
+        text += core::stringw(L"\n\n") + goal;
+    m_highscore_label->setText(text, false);
+}   // updateModeGoal
+
+// ----------------------------------------------------------------------------
 void TrackInfoScreen::setSoccerWidgets(bool has_AI)
 {
     // Set up the spinner for the choice between time or goal limit
@@ -663,6 +709,7 @@ void TrackInfoScreen::eventCallback(Widget* widget, const std::string& name,
 
             m_target_value_label->setVisible(enable_ffa);
             m_target_value_spinner->setVisible(enable_ffa);
+            updateModeGoal();
         }
     }
     else if (name == "target-value-spinner")

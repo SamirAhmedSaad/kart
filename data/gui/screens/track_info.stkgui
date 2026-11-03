@@ -11,7 +11,8 @@
            <!-- Left pane -->
             <div width="68%" height="100%" layout="vertical-row">
                 <box width="100%" height="49%" padding="10" layout="vertical-row">
-                    <label id="highscores" width="100%" text_align="center"/>
+                    <!-- Shows "High Scores", or what to do in modes without high scores -->
+                    <label id="highscores" width="100%" text_align="center" word_wrap="true"/>
                     <spacer width="1" height="1%"/>
                     <list id="highscore_entries" x="0" y="0" width="100%" proportion="1" line_height="1.2"/>
                 </box><!-- Highscores box -->
@@ -110,7 +111,7 @@
                 <spacer width="1" height="1%"/>
                 
                 <buttonbar id="buttons" height="20%" width="100%" align="center">
-                    <icon-button id="start" width="64" height="64" icon="gui/icons/green_check.png"
+                    <icon-button id="start" width="64" height="64" icon="gui/icons/tile_start.png"
                             I18N="In the track info screen" text="Start Race"/>
                 </buttonbar>
             </div>

@@ -28,3 +28,20 @@ magick -size 256x256 xc:none ( -size 256x256 gradient:"#b197fc"-"#6d28d9" ( -siz
 #   tile menu_story.png tile_menu_story.png       "#b197fc" "#6d28d9" "#2e1065" 12 180
 #   tile menu_story.png tile_menu_story_focus.png "#c4b5fd" "#7c3aed" "#ffd23f" 20 190
 #   bottom row (main_options, main_help, tutorial, crown, main_about, main_quit): "#b197fc" "#6d28d9" "#2e1065" 12 170
+
+# Dark version for readable white text (replaces the light panels, bar and background above):
+for i in button.png tab.png tab_vert.png spinner.png ; do magick $i -modulate 50,70,98 $i ; done
+for i in spinner_fill.png gauge_fill.png ; do magick $i -modulate 72,105 $i ; done
+magick spinner_deactivated.png -modulate 45,60 spinner_deactivated.png
+for i in button_focused.png tab_focus.png tab_vert_focus.png spinner_focus.png ; do magick $i -modulate 82,110 $i ; done
+for i in generic.png achievement.png friend.png ; do magick $i -modulate 50,110 $i ; done
+magick ../cartoon/tooltip.png -fill "#1e1440" -colorize 70 tooltip.png
+magick ../cartoon/table_header.png -fill "#3b1d6e" -colorize 75 table_header.png
+magick ../cartoon/error.png -modulate 55,110 error.png
+magick ../cartoon/rsection.png -fill "#1e1440" -colorize 70 rsection.png
+magick -size 64x64 xc:none -fill "rgba(24,14,56,0.90)" -stroke "#8b5cf6" -strokewidth 5 -draw "roundrectangle 3,3 60,60 12,12" PNG32:section_solid.png
+magick -size 256x256 xc:none -fill "#1e1440" -stroke "#8b5cf6" -strokewidth 14 -draw "roundrectangle 8,8 247,247 34,34" -fill none -stroke "#c4b5fd" -strokewidth 4 -draw "roundrectangle 21,21 234,234 24,24" PNG32:dialog_solid.png
+magick bottom_bar.png -colorspace gray -auto-level +level 8%,22% -fill "#2a1760" -tint 100 PNG32:bottom_bar.png
+magick ../cartoon/background.jpg -modulate 72,115 ( -size 1920x1080 gradient:"rgba(76,29,149,0.45)"-"rgba(30,20,64,0.25)" ) -compose over -composite ( -size 1920x1080 xc:none -fill "rgba(15,8,35,0.35)" -draw "rectangle 0,560 1920,1080" -blur 0x60 ) -compose over -composite -quality 92 background.jpg
+#   tile options_players.png tile_players.png "#b197fc" "#6d28d9" "#2e1065" 12 170
+#   tile green_check.png     tile_start.png   "#ffd166" "#f97316" "#7c2d12" 12 180  (Start Race and Continue)
