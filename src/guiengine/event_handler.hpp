@@ -83,6 +83,14 @@ namespace GUIEngine
         /** Last position of the mouse cursor */
         irr::core::vector2di     m_mouse_pos;
 
+        /** Where the current touch or click started, to detect swipes on ribbon grids */
+        irr::core::vector2di     m_press_pos;
+        bool                     m_press_tracked;
+
+        /** Scrolls the ribbon grid under the press position on a horizontal swipe.
+          * \return true when the release was used up by a swipe */
+        bool handleSwipe(const irr::SEvent& event);
+
     public:
 
         LEAK_CHECK()

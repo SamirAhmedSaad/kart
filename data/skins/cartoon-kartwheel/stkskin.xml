@@ -8,7 +8,7 @@ Cartoon skin by LCP and QwertyChouskie, released under CC-BY-SA 4.0+
 See SKIN_MAKING.md for more details on how the skin elements work.
 -->
 
-<skin base_theme_name="Cartoon" variant_name="Kart Race" author="LCP and QwertyChouskie (Kartwheel colors)" base_theme="cartoon">
+<skin base_theme_name="Cartoon" variant_name="Kart Race Night Circuit" author="LCP and QwertyChouskie (Kartwheel colors)" base_theme="cartoon">
 
 <!--
 Here you can configure advanced theming rules for this skin
@@ -107,7 +107,7 @@ Here you can configure advanced theming rules for this skin
 <element type="squareFocusHaloBW" common="y" image="glass_square_focused_bw.png"
       left_border="6" right_border ="6" top_border="6" bottom_border="6"
       hborder_out_portion="1.0" />
-<!-- Thick gold frame so the selected kart, track or mode is easy to spot -->
+<!-- Thick orange frame so the selected kart, track or mode is easy to spot -->
 <element type="squareFocusHalo1" image="glass_square_focused_gold.png"
       left_border="12" right_border ="12" top_border="12" bottom_border="12"
       hborder_out_portion="0.5" />
@@ -246,7 +246,7 @@ Here you can configure advanced theming rules for this skin
       hborder_out_portion="0.0" vborder_out_portion="0.0" />
 
 <!-- Stateless -->
-<!-- Dark panel with a light purple frame, like the other panels -->
+<!-- Dark navy panel with an orange accent line -->
 <element type="window" image="dialog_solid.png"
       left_border="40" right_border="40" top_border="40" bottom_border="40"
       hborder_out_portion="0.0" vborder_out_portion="0.0" />
@@ -262,7 +262,7 @@ Here you can configure advanced theming rules for this skin
     
 <!--                   Colors                  -->
 <color type="text" state="neutral" r="255" g="255" b="255" />
-<color type="brighttext" state="neutral" r="255" g="46" b="136" />
+<color type="brighttext" state="neutral" r="255" g="138" b="92" />
 
 <!-- For highlighted items, e.g. in list -->
 <color type="text" state="focused" r="255" g="255" b="255" />
@@ -271,8 +271,8 @@ Here you can configure advanced theming rules for this skin
 <color type="credits_text" state="neutral" r="255" g="255" b="255" />
 
 <!-- Color used for emphasized items in e.g. lists -->
-<color type="emphasis_text" state="neutral" r="255" g="210" b="63" />
-<color type="emphasis_text" state="focused" r="255" g="46" b="136" />
+<color type="emphasis_text" state="neutral" r="61" g="220" b="255" />
+<color type="emphasis_text" state="focused" r="255" g="138" b="92" />
 
 <!-- Color used for red/blue items in list (e.g. player team color in networking) -->
 <color type="list_blue" state="neutral" r="130" g="180" b="255" />
@@ -281,27 +281,27 @@ Here you can configure advanced theming rules for this skin
 <color type="list_red" state="focused" r="255" g="120" b="120" />
 
 <!-- Color used to fade out background when a dialog is shown -->
-<color type="dialog_background" state="neutral" a="120" r="0" g="0" b="0" />
+<color type="dialog_background" state="neutral" a="170" r="5" g="8" b="15" />
 
 <!-- Color used for tips in the loading screen -->
-<color type="tips_background" state="neutral" a="120" r="0" g="0" b="0" />
+<color type="tips_background" state="neutral" a="190" r="11" g="15" b="26" />
 
 <!-- Text field color -->
-<color type="text_field" state="background" a="255" r="40" g="26" b="82" />
-<color type="text_field" state="background_focused" a="255" r="66" g="40" b="140" />
-<color type="text_field" state="background_deactivated" a="255" r="55" g="50" b="75" />
-<color type="text_field" state="background_marked" a="128" r="124" g="58" b="237" />
-<color type="text_field" state="neutral" a="255" r="139" g="92" b="246" />
-<color type="text_field" state="focused" a="255" r="255" g="194" b="26" />
-<color type="text_field" state="deactivated" a="255" r="90" g="85" b="110" />
+<color type="text_field" state="background" a="255" r="27" g="34" b="54" />
+<color type="text_field" state="background_focused" a="255" r="37" g="48" b="74" />
+<color type="text_field" state="background_deactivated" a="255" r="20" g="25" b="39" />
+<color type="text_field" state="background_marked" a="128" r="242" g="83" b="26" />
+<color type="text_field" state="neutral" a="255" r="52" g="64" b="92" />
+<color type="text_field" state="focused" a="255" r="242" g="83" b="26" />
+<color type="text_field" state="deactivated" a="255" r="42" g="51" b="72" />
 
 <!-- Rating star image -->
 <!-- Provided by base theme
 <element type="rating" state="neutral" image="rating_star.png" />-->
 
 <!-- Font color -->
-<color type="font" state="top" a="255" r="255" g="214" b="10" />
-<color type="font" state="bottom" a="255" r="255" g="138" b="0" />
-<color type="font" state="normal" a="255" r="124" g="58" b="237" />
+<color type="font" state="top" a="255" r="255" g="255" b="255" />
+<color type="font" state="bottom" a="255" r="255" g="176" b="143" />
+<color type="font" state="normal" a="255" r="242" g="83" b="26" />
 
 </skin>

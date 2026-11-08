@@ -154,12 +154,13 @@ void MainMenuScreen::loadedFromFile()
     
     RibbonWidget* rw_top = getWidget<RibbonWidget>("menu_toprow");
     assert(rw_top != NULL);
+    (void)rw_top;
     
     if (track_manager->getTrack("overworld") == NULL ||
         track_manager->getTrack("introcutscene") == NULL ||
         track_manager->getTrack("introcutscene2") == NULL)
     {
-        rw_top->removeChildNamed("story");
+        getWidget<RibbonWidget>("menu_secondrow")->removeChildNamed("story");
     }
 
 #if DEBUG_MENU_ITEM != 1
@@ -626,7 +627,8 @@ void MainMenuScreen::eventCallback(Widget* widget, const std::string& name,
     }
     else if (selection == "quit")
     {
-        StateManager::get()->popMenu();
+        // Ask first, like the back key does
+        onEscapePressed();
         return;
     }
     else if (selection == "about")

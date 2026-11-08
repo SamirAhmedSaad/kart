@@ -18,9 +18,12 @@
 
         <div width="100%" proportion="10" layout="horizontal-row">
             <box width="82%" height="100%" layout="vertical-row" padding="1">
-                <ribbon_grid id="tracks" proportion="1" width="100%" square_items="true"
-                    label_location="each" align="center"
+                <!-- One row of big track cards, the arrows and swipes scroll through the rest -->
+                <spacer width="20" proportion="1" />
+                <ribbon_grid id="tracks" height="64%" width="100%" square_items="true"
+                    label_location="each" align="center" max_rows="1"
                     child_width="256" child_height="160" />
+                <spacer width="20" proportion="1" />
             </box>
 
             <spacer width="1%" height="20" />

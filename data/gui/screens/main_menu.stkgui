@@ -1,69 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <stkgui>
     <div x="0" y="0" width="100%" height="100%" layout="vertical-row" >
-        <icon id="logo" align="center" proportion="4" width="90%" icon="gui/icons/logo.png"/>
 
-        <!-- Big tiles for the two ways to play, the race tile is the main action -->
-        <buttonbar id="menu_toprow" proportion="4" width="90%" align="center">
-            <icon-button id="story" width="128" height="128"
-                         icon="gui/icons/tile_menu_story.png" focus_icon="gui/icons/tile_menu_story_focus.png"
-                         I18N="Main menu button"  text="Story Mode" word_wrap="true"/>
-            <icon-button id="new" width="160" height="160"
-                         icon="gui/icons/tile_menu_race.png" focus_icon="gui/icons/tile_menu_race_focus.png"
-                         I18N="Main menu button" text="Singleplayer" word_wrap="true"/>
-        </buttonbar>
-
-        <spacer width="10" height="6%"/>
-
-        <div width="100%" height="5f" layout="vertical-row" >
-
-            <spacer width="10" height="8%"/>
-
-            <bottombar width="100%" height="92%" layout="horizontal-row">
-
-                <spacer width="10" height="10" />
-
-                <label proportion="1" height="100%" id="info_addons"
-                    I18N="In the main screen"
-                    text=""
-                    align="center" text_align="left" />
-
-                <spacer width="10" height="10" />
-
-                <buttonbar id="menu_bottomrow" x="0" y="0" width="80%" height="62%" align="top">
-                    <icon-button id="test_gpwin" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: GPWin" label_location="hover"/>
-                    <icon-button id="test_gplose" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: GPLose" label_location="hover"/>
-                    <icon-button id="test_unlocked" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: Unlocked" label_location="hover"/>
-                    <icon-button id="test_unlocked2" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: Unlocked 2" label_location="hover"/>
-                    <icon-button id="test_intro" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: Intro" label_location="hover"/>
-                    <icon-button id="test_outro" width="64" height="64" icon="gui/icons/main_options.png"
-                                raw_text="TEST: Outro" label_location="hover"/>
-                    <icon-button id="players" width="64" height="64" icon="gui/icons/tile_players.png"
-                                I18N="In the main screen" text="Players" label_location="bottom"/>
-                    <icon-button id="options" width="64" height="64" icon="gui/icons/tile_main_options.png"
-                                I18N="In the main screen"  text="Options" label_location="bottom"/>
-                    <icon-button id="help" width="64" height="64" icon="gui/icons/tile_main_help.png"
-                                I18N="In the main screen" text="Help" label_location="bottom"/>
-                    <icon-button id="startTutorial" width="64" height="64" icon="gui/icons/tile_tutorial.png"
-                                I18N="In the main screen" text="Tutorial" label_location="bottom"/>
-                    <icon-button id="highscores" width="64" height="64" icon="gui/icons/tile_crown.png"
-                                I18N="In the main screen" text="High Scores" label_location="bottom"/>
-                    <icon-button id="about" width="64" height="64" icon="gui/icons/tile_main_about.png"
-                                I18N="In the main screen" text="About" label_location="bottom"/>
-                    <icon-button id="quit" width="64" height="64" icon="gui/icons/tile_main_quit.png"
-                                I18N="In the main screen" text="Quit" label_location="bottom"/>
-                </buttonbar>
-
-                <!-- Same share as the empty label on the left, so the buttons are centred -->
-                <spacer proportion="1" height="10" />
-
-            </bottombar>
+        <!-- Top bar: small round actions on the right, like the profile and settings chips of the design -->
+        <div width="100%" height="22%" layout="horizontal-row">
+            <spacer proportion="1" height="10"/>
+            <buttonbar id="menu_bottomrow" width="52%" height="100%" align="center">
+                <icon-button id="test_gpwin" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: GPWin" label_location="hover"/>
+                <icon-button id="test_gplose" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: GPLose" label_location="hover"/>
+                <icon-button id="test_unlocked" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: Unlocked" label_location="hover"/>
+                <icon-button id="test_unlocked2" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: Unlocked 2" label_location="hover"/>
+                <icon-button id="test_intro" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: Intro" label_location="hover"/>
+                <icon-button id="test_outro" width="64" height="64" icon="gui/icons/main_options.png"
+                            raw_text="TEST: Outro" label_location="hover"/>
+                <icon-button id="players" width="64" height="64" icon="gui/icons/tile_players.png"
+                            I18N="In the main screen" text="Profile" label_location="bottom"/>
+                <icon-button id="options" width="64" height="64" icon="gui/icons/tile_main_options.png"
+                            I18N="In the main screen"  text="Options" label_location="bottom"/>
+                <icon-button id="help" width="64" height="64" icon="gui/icons/tile_main_help.png"
+                            I18N="In the main screen" text="Help" label_location="bottom"/>
+                <icon-button id="about" width="64" height="64" icon="gui/icons/tile_main_about.png"
+                            I18N="In the main screen" text="About" label_location="bottom"/>
+                <icon-button id="quit" width="64" height="64" icon="gui/icons/tile_main_quit.png"
+                            I18N="In the main screen" text="Quit" label_location="bottom"/>
+            </buttonbar>
+            <spacer width="3%" height="10"/>
         </div>
+
+        <div width="100%" proportion="1" layout="horizontal-row">
+            <spacer width="4%" height="10"/>
+
+            <!-- Left: the call to action, with the race tile as the biggest thing on screen -->
+            <div width="56%" height="100%" layout="vertical-row">
+                <header width="100%" height="16%" text_align="left" I18N="In the main screen" text="Ready to race?"/>
+                <label width="100%" height="10%" text_align="left" I18N="In the main screen"
+                       text="Pick a kart, choose a track, beat the field."/>
+                <div width="100%" proportion="1" layout="horizontal-row">
+                    <buttonbar id="menu_toprow" width="34%" height="100%" align="center">
+                        <icon-button id="new" width="200" height="200"
+                                     icon="gui/icons/tile_menu_race.png" focus_icon="gui/icons/tile_menu_race_focus.png"
+                                     I18N="Main menu button" text="Race" word_wrap="true"/>
+                    </buttonbar>
+                    <buttonbar id="menu_secondrow" proportion="1" height="70%" align="center">
+                        <icon-button id="story" width="128" height="128"
+                                     icon="gui/icons/tile_menu_story.png" focus_icon="gui/icons/tile_menu_story_focus.png"
+                                     I18N="Main menu button"  text="Story Mode" word_wrap="true"/>
+                        <icon-button id="highscores" width="128" height="128" icon="gui/icons/tile_crown.png"
+                                     I18N="In the main screen" text="Trophies" word_wrap="true"/>
+                        <icon-button id="startTutorial" width="128" height="128" icon="gui/icons/tile_tutorial.png"
+                                     I18N="In the main screen" text="Tutorial" word_wrap="true"/>
+                    </buttonbar>
+                </div>
+                <spacer width="10" height="4%"/>
+            </div>
+
+            <!-- Right: the brand mark -->
+            <icon id="logo" proportion="1" height="86%" align="center" icon="gui/icons/logo.png"/>
+            <spacer width="3%" height="10"/>
+        </div>
+
+        <!-- Kept for the news ticker code, it stays empty in this game -->
+        <label id="info_addons" width="100%" height="1" text="" I18N="In the main screen"/>
     </div>
 
 </stkgui>

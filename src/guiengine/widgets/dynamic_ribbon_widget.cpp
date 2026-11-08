@@ -282,9 +282,12 @@ void DynamicRibbonWidget::buildInternalStructure()
                 Log::warn("DynamicRibbonWidget", "The 'max_rows' property must be an integer greater than zero; "
                     "Ignoring current value '%s'", m_properties[PROP_MAX_ROWS].c_str());
             }
-            else
+            else if (m_row_amount > max_rows)
             {
-                if (m_row_amount > max_rows) m_row_amount = max_rows;
+                m_row_amount = max_rows;
+                // The size ratio was picked for more rows, redo it for the capped row count
+                LayoutUtils::estimateRowScore(m_row_amount, m_w, m_h - m_label_height,
+                    aspect_ratio, item_shown_target, &m_size_ratio, (float)m_child_height);
             }
         }
     }
@@ -800,6 +803,21 @@ void DynamicRibbonWidget::onRibbonWidgetFocus(RibbonWidget* emitter, const int p
 #pragma mark -
 #pragma mark Setters / Actions
 #endif
+
+bool DynamicRibbonWidget::swipe(int dx)
+{
+    if (m_deactivated || m_col_amount < 1 || m_w <= 0 ||
+        (int)m_items.size() <= m_row_amount*m_col_amount)
+        return false;
+
+    const float col_width = (float)m_w / (float)m_col_amount;
+    const int cols = std::max(1, (int)(std::abs(dx) / col_width + 0.5f));
+    // Swiping to the left brings in the items on the right
+    scroll(dx < 0 ? cols : -cols);
+    return true;
+}   // swipe
+
+// -----------------------------------------------------------------------------
 
 void DynamicRibbonWidget::scroll(int x_delta, bool evenIfDeactivated)
 {

@@ -214,6 +214,10 @@ namespace GUIEngine
           */
         DynamicRibbonWidget(const bool combo, const bool multi_row);
 
+        /** Scrolls by as many columns as a horizontal swipe of \p dx pixels covers.
+          * \return whether the ribbon scrolled */
+        bool swipe(int dx);
+
         /** Reference pointers only, the actual instances are owned by m_children. Used to create multiple-row
          ribbons (what appears to be a grid of icons is actually a vector of stacked basic ribbons) */
         PtrVector<RibbonWidget, REF> m_rows;

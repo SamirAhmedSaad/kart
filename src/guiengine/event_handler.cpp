@@ -29,6 +29,7 @@
 #include "guiengine/screen.hpp"
 #include "guiengine/screen_keyboard.hpp"
 #include "guiengine/widget.hpp"
+#include "guiengine/widgets/dynamic_ribbon_widget.hpp"
 #include "guiengine/widgets/list_widget.hpp"
 #include "guiengine/widgets/ribbon_widget.hpp"
 #include "guiengine/widgets/spinner_widget.hpp"
@@ -57,6 +58,7 @@ using namespace irr::gui;
 EventHandler::EventHandler()
 {
     m_accept_events = false;
+    m_press_tracked = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +160,12 @@ bool EventHandler::OnEvent (const SEvent &event)
         DemoWorld::resetIdleTime();
     }
 
+    if (event.EventType == EET_MOUSE_INPUT_EVENT &&
+        StateManager::get()->getGameState() != GAME && handleSwipe(event))
+    {
+        return true;
+    }
+
     if (event.EventType == EET_GUI_EVENT)
     {
         return onGUIEvent(event) == EVENT_BLOCK;
@@ -257,6 +265,50 @@ bool EventHandler::OnEvent (const SEvent &event)
     // nothing to do with other events
     return false;
 }
+
+// -----------------------------------------------------------------------------
+
+bool EventHandler::handleSwipe(const SEvent& event)
+{
+    if (event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN)
+    {
+        m_press_pos = core::vector2di(event.MouseInput.X, event.MouseInput.Y);
+        m_press_tracked = true;
+        return false;
+    }
+    if (event.MouseInput.Event != EMIE_LMOUSE_LEFT_UP || !m_press_tracked)
+        return false;
+    m_press_tracked = false;
+
+    const int dx = event.MouseInput.X - m_press_pos.X;
+    const int dy = event.MouseInput.Y - m_press_pos.Y;
+    const int min_dx = (int)irr_driver->getActualScreenSize().Width / 14;
+    if (std::abs(dx) < min_dx || std::abs(dx) < 2 * std::abs(dy))
+        return false;
+
+    // Find the ribbon grid the swipe started on
+    IGUIElement* element = GUIEngine::getGUIEnv()->getRootGUIElement()
+                                                 ->getElementFromPoint(m_press_pos);
+    DynamicRibbonWidget* grid = NULL;
+    for (; element != NULL && grid == NULL; element = element->getParent())
+    {
+        Widget* w = GUIEngine::getWidget(element->getID());
+        if (w == NULL)
+            continue;
+        grid = dynamic_cast<DynamicRibbonWidget*>(w);
+        if (grid == NULL && w->m_event_handler != NULL)
+            grid = dynamic_cast<DynamicRibbonWidget*>(w->m_event_handler);
+    }
+    if (grid == NULL || !grid->swipe(dx))
+        return false;
+
+    // Release the pressed item away from it, so the swipe doesn't also pick it
+    SEvent release = event;
+    release.MouseInput.X = -10000;
+    release.MouseInput.Y = -10000;
+    GUIEngine::getGUIEnv()->postEventFromUser(release);
+    return true;
+}   // handleSwipe
 
 // -----------------------------------------------------------------------------
 
@@ -750,6 +802,10 @@ EventPropagation EventHandler::onWidgetActivated(GUIEngine::Widget* w, const int
 {
     if (w->onActivationInput(playerID) == EVENT_BLOCK)
         return EVENT_BLOCK;
+
+    // Short feedback sound for every activated menu element
+    if (StateManager::get()->getGameState() != GUIEngine::GAME)
+        SFXManager::get()->quickSound("ui_tap");
 
     Widget* parent = w->m_event_handler;
     

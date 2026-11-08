@@ -6,7 +6,7 @@
         <spacer width="20" height="2%" />
 
         <buttonbar id="backbtnribbon" proportion="5" width="100%" align="center">
-            <icon-button id="backbtn" width="128" height="128" align="center" icon="gui/icons/tile_back.png" 
+            <icon-button id="backbtn" width="128" height="128" align="center" icon="gui/icons/tile_start.png" 
                          extend_label="200" I18N="Race paused button" raw_text="Text"/>
             <icon-button id="touch_device" width="128" height="128" align="center" icon="gui/icons/tile_gyroscope_icon.png"
                          extend_label="200" I18N="Race paused button" text="Gyroscope"/>
