@@ -6,9 +6,9 @@
 
         <tiny-header width="100%" text="Select a difficulty" align="center" text_align="left" />
         <spacer height="10" width="25"/>
-        <box width="100%" proportion="5" padding="10" layout="vertical-row">
-            <spacer height="15%" width="25"/>
-            <ribbon x="2%" y="15%" id="difficulty" height="70%" width="96%" align="center">
+        <box width="100%" proportion="4" padding="10" layout="vertical-row">
+            <spacer height="10%" width="25"/>
+            <ribbon x="2%" y="10%" id="difficulty" height="80%" width="96%" align="center">
                 <icon-button id="novice" width="128" height="128" icon="gui/icons/difficulty_easy.png"
                         I18N="Difficulty" text="Novice"/>
                 <icon-button id="intermediate" width="128" height="128" icon="gui/icons/difficulty_medium.png"
@@ -16,20 +16,27 @@
                 <icon-button id="expert" width="128" height="128" icon="gui/icons/difficulty_hard.png"
                         I18N="Difficulty"  text="Expert"/>
                 <icon-button id="best" width="128" height="128" icon="gui/icons/difficulty_best.png"
-                        I18N="Difficulty"  text="SuperTux"/>
+                        I18N="Difficulty"  text="Legend"/>
             </ribbon>
         </box>
         <spacer height="2%" width="25"/>
 
         <tiny-header width="100%" text="Select a game mode" align="center" text_align="left" />
-        
+
         <spacer height="1%" width="25"/>
-        <box width="100%" proportion="8" padding="10" layout="vertical-row">
-            <spacer height="5%" width="25" />
-            <ribbon_grid id="gamemode" height="70%" width="95%" label_location="bottom" align="center"
-                                child_width="96" child_height="96" />
-            <spacer height="5%" width="25" />
-        </box>
+        <div width="100%" proportion="7" layout="horizontal-row">
+            <box width="80%" height="100%" padding="10" layout="vertical-row">
+                <!-- Every mode shows its name, the selected one is explained below -->
+                <ribbon_grid id="gamemode" height="66%" width="95%" label_location="each" align="center"
+                                    child_width="96" child_height="96" />
+                <label id="mode_info" width="95%" proportion="1" align="center" text_align="center" word_wrap="true"/>
+            </box>
+            <spacer width="2%" height="10"/>
+            <buttonbar id="next_bar" proportion="1" height="100%" align="center">
+                <icon-button id="next" width="64" height="64" icon="gui/icons/tile_start.png"
+                        I18N="In the race setup screen" text="Next"/>
+            </buttonbar>
+        </div>
     </div>
 
     <icon-button id="back" x="1%" y="0" height="9%" icon="gui/icons/back.png"/>

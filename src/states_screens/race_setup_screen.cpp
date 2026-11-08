@@ -21,6 +21,7 @@
 #include "config/player_manager.hpp"
 #include "config/user_config.hpp"
 #include "guiengine/widgets/dynamic_ribbon_widget.hpp"
+#include "guiengine/widgets/label_widget.hpp"
 #include "guiengine/widgets/ribbon_widget.hpp"
 #include "guiengine/widgets/spinner_widget.hpp"
 #include "input/input_manager.hpp"
@@ -82,38 +83,41 @@ void RaceSetupScreen::init()
     assert( w2 != NULL );
     w2->clearItems();
 
-    // ---- Add game modes
-    irr::core::stringw name1 = irr::core::stringw(
-        RaceManager::getNameOf(RaceManager::MINOR_MODE_NORMAL_RACE)) + L"\n";
+    // ---- Add game modes: short names under the icons, the description of
+    // the selected one goes into the mode_info label
+    m_mode_descriptions.clear();
+    w2->addItem(RaceManager::getNameOf(RaceManager::MINOR_MODE_NORMAL_RACE), IDENT_STD,
+                RaceManager::getIconOf(RaceManager::MINOR_MODE_NORMAL_RACE));
     //FIXME: avoid duplicating descriptions from the help menu!
-    name1 +=  _("All blows allowed, so catch weapons and make clever use of them!");
+    m_mode_descriptions[IDENT_STD] =
+        _("All blows allowed, so catch weapons and make clever use of them!");
 
-    w2->addItem( name1, IDENT_STD, RaceManager::getIconOf(RaceManager::MINOR_MODE_NORMAL_RACE));
-
-    irr::core::stringw name2 = irr::core::stringw(
-        RaceManager::getNameOf(RaceManager::MINOR_MODE_TIME_TRIAL)) + L"\n";
+    w2->addItem(RaceManager::getNameOf(RaceManager::MINOR_MODE_TIME_TRIAL), IDENT_TTRIAL,
+                RaceManager::getIconOf(RaceManager::MINOR_MODE_TIME_TRIAL));
     //FIXME: avoid duplicating descriptions from the help menu!
-    name2 += _("Contains no powerups, so only your driving skills matter!");
-    w2->addItem( name2, IDENT_TTRIAL, RaceManager::getIconOf(RaceManager::MINOR_MODE_TIME_TRIAL));
+    m_mode_descriptions[IDENT_TTRIAL] =
+        _("Contains no powerups, so only your driving skills matter!");
 
     if (PlayerManager::getCurrentPlayer()->isLocked(IDENT_FTL))
     {
-        w2->addItem( _("Locked : solve active challenges to gain access to more!"),
+        w2->addItem(RaceManager::getNameOf(RaceManager::MINOR_MODE_FOLLOW_LEADER),
             "locked", RaceManager::getIconOf(RaceManager::MINOR_MODE_FOLLOW_LEADER), true);
+        m_mode_descriptions["locked"] =
+            _("Locked : solve active challenges to gain access to more!");
     }
     else
     {
-        irr::core::stringw name3 = irr::core::stringw(
-            RaceManager::getNameOf(RaceManager::MINOR_MODE_FOLLOW_LEADER)) + L"\n";
+        w2->addItem(RaceManager::getNameOf(RaceManager::MINOR_MODE_FOLLOW_LEADER), IDENT_FTL,
+                    RaceManager::getIconOf(RaceManager::MINOR_MODE_FOLLOW_LEADER), false);
         //I18N: short definition for follow-the-leader game mode
-        name3 += _("Keep up with the leader kart but don't overtake it!");
-        w2->addItem(name3, IDENT_FTL, RaceManager::getIconOf(RaceManager::MINOR_MODE_FOLLOW_LEADER), false);
+        m_mode_descriptions[IDENT_FTL] =
+            _("Keep up with the leader kart but don't overtake it!");
     }
 
-    irr::core::stringw name4 = irr::core::stringw(_("Battle")) + L"\n";
+    w2->addItem(_("Battle"), IDENT_STRIKES, RaceManager::getIconOf(RaceManager::MINOR_MODE_FREE_FOR_ALL));
     //FIXME: avoid duplicating descriptions from the help menu!
-    name4 += _("Hit others with weapons until they lose all their lives.");
-    w2->addItem( name4, IDENT_STRIKES, RaceManager::getIconOf(RaceManager::MINOR_MODE_FREE_FOR_ALL));
+    m_mode_descriptions[IDENT_STRIKES] =
+        _("Hit others with weapons until they lose all their lives.");
 
     // Soccer, egg hunt, ghost replay and lap trial are not offered, this
     // game keeps to racing and battling against the computer
@@ -142,6 +146,8 @@ void RaceSetupScreen::init()
     }
 
     w2->setItemCountHint(4);
+    m_last_mode = w2->getSelectionIDString(PLAYER_ID_GAME_MASTER);
+    updateModeInfo();
 
     {
         RibbonWidget* w = getWidget<RibbonWidget>("difficulty");
@@ -173,10 +179,45 @@ void RaceSetupScreen::eventCallback(Widget* widget, const std::string& name,
     }
     else if (name == "gamemode")
     {
+        // The first tap picks a mode, tapping it again or Next starts it
+        DynamicRibbonWidget* w = dynamic_cast<DynamicRibbonWidget*>(widget);
+        const std::string selected = w->getSelectionIDString(PLAYER_ID_GAME_MASTER);
+        const bool again = selected == m_last_mode;
+        m_last_mode = selected;
+        updateModeInfo();
+        if (again)
+            startSelectedMode();
+    }
+    else if (name == "next_bar")
+    {
+        startSelectedMode();
+    }
+    else if (name == "back")
+    {
+        StateManager::get()->escapePressed();
+    }
+
+}   // eventCallback
+
+// -----------------------------------------------------------------------------
+/** Shows the description of the selected game mode under the mode icons. */
+void RaceSetupScreen::updateModeInfo()
+{
+    std::map<std::string, irr::core::stringw>::const_iterator it =
+        m_mode_descriptions.find(m_last_mode);
+    getWidget<LabelWidget>("mode_info")->setText(
+        it == m_mode_descriptions.end() ? L"" : it->second, false);
+}   // updateModeInfo
+
+// -----------------------------------------------------------------------------
+/** Continues to the track or arena selection for the selected game mode. */
+void RaceSetupScreen::startSelectedMode()
+{
+    {
         assignDifficulty();
 
-        DynamicRibbonWidget* w = dynamic_cast<DynamicRibbonWidget*>(widget);
-        const std::string& selectedMode = w->getSelectionIDString(PLAYER_ID_GAME_MASTER);
+        DynamicRibbonWidget* w = getWidget<DynamicRibbonWidget>("gamemode");
+        const std::string selectedMode = w->getSelectionIDString(PLAYER_ID_GAME_MASTER);
 
         if (selectedMode == IDENT_STD)
         {
@@ -236,12 +277,7 @@ void RaceSetupScreen::eventCallback(Widget* widget, const std::string& name,
             unlock_manager->playLockSound();
         }
     }
-    else if (name == "back")
-    {
-        StateManager::get()->escapePressed();
-    }
-
-}   // eventCallback
+}   // startSelectedMode
 
 // -----------------------------------------------------------------------------
 /** Converts the difficulty string into a RaceManager::Difficulty value

@@ -46,6 +46,9 @@ ICONS = {
     "globe":    (["M3 12 L21 12", "M12 3 Q7 12 12 21", "M12 3 Q17 12 12 21"], [(12, 12, 9, False)], False),
     "people":   (["M2 20 Q3 15 9 15 Q15 15 16 20", "M16 15 Q21 15 22 20"], [(9, 8, 3.5, False), (16.5, 9, 2.6, False)], False),
     "kart":     (["M3 15 L6 10 L13 10 L15 13 L21 13 L21 16 L3 16 Z", "M8 10 L9 7 L11 7"], [(7, 17.5, 2.2, False), (17, 17.5, 2.2, False)], False),
+    "weight":   (["M8 9 L16 9 L19 20 L5 20 Z", "M9 9 Q9 4 12 4 Q15 4 15 9"], [], False),
+    "bolt":     (["M13 2 L4 14 L11 14 L10 22 L19 10 L12 10 Z"], [], False),
+    "bottle":   (["M10 3 L14 3 L14 6 Q18 7 18 11 L18 20 L6 20 L6 11 Q6 7 10 6 Z", "M9 14 L15 14"], [], False),
     "giveup":   (["M5 21 L5 4", "M5 4 L16 4 L14 8 L16 12 L5 12", "M15 16 L21 22", "M21 16 L15 22"], [], False),
 }
 
@@ -56,6 +59,10 @@ STYLES = {
     "primary":       ("#FF5A1F", "#FF9268", 6, "#0B0F1A"),
     "primary_focus": ("#FF6E38", "#FFFFFF", 12, "#0B0F1A"),
     "danger":        ("#1B2236", "#3A4664", 6, "#FF7A59"),
+    # no tile behind, for small inline icons such as the kart stats
+    "plain":         (None, None, 0, "#3DDCFF"),
+    "plain_orange":  (None, None, 0, "#FF7A45"),
+    "plain_dim":     (None, None, 0, "#5B6680"),
 }
 
 # output name -> (icon, style)
@@ -123,6 +130,13 @@ OVERRIDES = {
     "options_ui":          ("layout", "glass"),
     "options_language":    ("globe", "glass"),
     "options_players":     ("people", "glass"),
+    "options_general":     ("info", "glass"),
+    "tutorial":            ("cap", "glass"),
+    "mass":                ("weight", "plain"),
+    "speed":               ("hard", "plain"),
+    "power":               ("bolt", "plain_orange"),
+    "nitro":               ("bottle", "plain"),
+    "score_empty":         ("watch", "plain_dim"),
 }
 
 
@@ -161,10 +175,16 @@ def draw_args(icon, style, k=2):
     fill, stroke, sw, ink = STYLES[style]
     s = 6.4 * k
     off = (256 * k - 24 * s) / 2
-    a = ["-size", f"{256*k}x{256*k}", "xc:none",
-         "-fill", fill, "-stroke", stroke, "-strokewidth", str(sw * k),
-         "-draw", f"roundrectangle {(4+sw/2)*k},{(4+sw/2)*k} {(252-sw/2)*k},{(252-sw/2)*k} {52*k},{52*k}",
-         "-stroke", ink, "-strokewidth", f"{2.1*s:.1f}"]
+    if fill is None:
+        # plain icons fill the whole image
+        s = 9.6 * k
+        off = (256 * k - 24 * s) / 2
+        a = ["-size", f"{256*k}x{256*k}", "xc:none"]
+    else:
+        a = ["-size", f"{256*k}x{256*k}", "xc:none",
+             "-fill", fill, "-stroke", stroke, "-strokewidth", str(sw * k),
+             "-draw", f"roundrectangle {(4+sw/2)*k},{(4+sw/2)*k} {(252-sw/2)*k},{(252-sw/2)*k} {52*k},{52*k}"]
+    a += ["-stroke", ink, "-strokewidth", f"{2.1*s:.1f}"]
     for d in paths:
         a += ["-fill", ink if filled else "none",
               "-draw", f"stroke-linecap round stroke-linejoin round path '{scale_path(d, s, off)}'"]

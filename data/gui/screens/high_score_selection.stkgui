@@ -26,4 +26,11 @@
 
         <spacer width="100%" height="2%" />
     </div>
+
+    <!-- Shown over the empty list until the first race is finished, see refresh() -->
+    <div x="20%" y="30%" width="60%" height="45%" layout="vertical-row">
+        <icon id="empty_icon" proportion="2" width="100%" align="center" icon="gui/icons/tile_crown.png"/>
+        <label id="empty_label" proportion="1" width="100%" text_align="center" word_wrap="true"
+               I18N="In the high score selection screen" text="No best times yet, finish a race to set one!"/>
+    </div>
 </stkgui>

@@ -27,6 +27,7 @@
 #include "utils/ptr_vector.hpp"
 
 #include "guiengine/widgets/icon_button_widget.hpp"
+#include "guiengine/widgets/label_widget.hpp"
 #include "guiengine/widgets/progress_bar_widget.hpp"
 
 
@@ -49,6 +50,7 @@ namespace GUIEngine
         /** widget coordinates */
         int m_bar_x, m_bar_y, m_bar_h, m_bar_w;
         int m_iconbutton_x, m_iconbutton_y, m_iconbutton_h, m_iconbutton_w;
+        int m_label_x, m_label_w;
         
         int m_player_id;
         //shall icon be display left of the skill bar?
@@ -60,6 +62,8 @@ namespace GUIEngine
         
         IconButtonWidget* m_iconbutton;
         ProgressBarWidget* m_bar;
+        /** Short word next to the icon, so the stat is clear without a tooltip */
+        LabelWidget* m_label;
 
         SkillLevelWidget(core::recti area, const int player_id,
                          bool multiplayer, bool display_text,
@@ -96,7 +100,7 @@ namespace GUIEngine
         /** Get the current label of the widget. */
         const irr::core::stringw getLabel()
         {
-            return m_iconbutton->getText();
+            return m_label->getText();
         }
 
         /** If the label should be displayed. */

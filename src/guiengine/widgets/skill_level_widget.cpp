@@ -72,8 +72,16 @@ SkillLevelWidget::SkillLevelWidget(core::recti area, const int player_id,
     m_iconbutton->m_h = m_iconbutton_h;
     m_iconbutton->m_properties[PROP_ID] = StringUtils::insertValues("@p%i_skill_label", m_player_id);
 
+    m_label = new LabelWidget();
+    m_label->m_x = m_label_x;
+    m_label->m_y = m_y;
+    m_label->m_w = m_label_w;
+    m_label->m_h = m_h * 5 / 3;
+    m_label->m_properties[PROP_ID] = StringUtils::insertValues("@p%i_skill_name", m_player_id);
+
     m_children.push_back(m_bar);
     m_children.push_back(m_iconbutton);
+    m_children.push_back(m_label);
     
     m_display_icon = display_icon;
 }   // KartStatsWidget
@@ -85,6 +93,7 @@ void SkillLevelWidget::add()
     m_bar->add();
     m_iconbutton->add();
     m_iconbutton->setVisible(m_display_icon);
+    m_label->add();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +118,19 @@ void SkillLevelWidget::move(const int x, const int y, const int w, const int h)
                             m_iconbutton_w,
                             m_iconbutton_h);
     }
+    if (m_label != NULL)
+    {
+        // Before add() there is no label element to resize yet
+        if (m_label->getIrrlichtElement() != NULL)
+            m_label->move(m_label_x, m_iconbutton_y, m_label_w, m_iconbutton_h);
+        else
+        {
+            m_label->m_x = m_label_x;
+            m_label->m_y = m_iconbutton_y;
+            m_label->m_w = m_label_w;
+            m_label->m_h = m_iconbutton_h;
+        }
+    }
 }
 
 // -------------------------------------------------------------------------
@@ -126,11 +148,14 @@ void SkillLevelWidget::setSize(const int x, const int y, const int w, const int 
     m_iconbutton_h = iconbox_h;
     m_iconbutton_w = iconbox_w;
 
-    // -- sizes
-    m_bar_w = m_w - iconbox_w - 25;  //leaving just enough space for icon + its margin
+    // -- sizes: icon, then the short name, then the bar
+    m_label_x = x + iconbox_w + m_w / 48;
+    m_label_w = m_w * 30 / 100;
+
+    m_bar_w = m_w - iconbox_w - m_label_w - 25;  //leaving just enough space for icon, name and margin
     m_bar_h = h;
     
-    m_bar_x = x + iconbox_w + m_w / 32;
+    m_bar_x = m_label_x + m_label_w;
     m_bar_y = y + h/2 - m_bar_h/2; //align to midpoint in y direction
 
     m_iconbutton_x = x; //make sure icon has enough space on the right
@@ -142,6 +167,13 @@ void SkillLevelWidget::setSize(const int x, const int y, const int w, const int 
 void SkillLevelWidget::setValue(const float value)
 {
     m_bar->moveValue(value);
+}
+
+// -----------------------------------------------------------------------------
+
+void SkillLevelWidget::setLabel(const irr::core::stringw& label)
+{
+    m_label->setText(label, false);
 }
 
 // -----------------------------------------------------------------------------

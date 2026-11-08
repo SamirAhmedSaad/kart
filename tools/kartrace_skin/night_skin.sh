@@ -42,6 +42,7 @@ magick -size 32x64 xc:"rgba(242,83,26,0.90)" PNG32:select.png
 magick -size 32x64 xc:"$GLASS" -fill "$EDGE" -draw "rectangle 0,61 31,63" PNG32:table_header.png
 magick -size 32x64 xc:"$ORANGE" PNG32:table_header_down.png
 magick -size 32x32 xc:none -fill "#46526F" -draw "roundrectangle 4,0 27,31 10,10" PNG32:scrollbar_thumb.png
+magick -size 32x32 xc:none -fill "#141927" -draw "roundrectangle 6,0 25,31 9,9" PNG32:scrollbar_bg.png
 magick -size 24x24 xc:none -fill "$CYAN" -draw "polygon 4,17 12,7 20,17" PNG32:scrollbar_button.png
 
 # Checkboxes
@@ -53,6 +54,8 @@ box checkbox.png               "$GLASS"  "$EDGE"  4
 box checkbox_focus.png         "$GLASS"  "$CYAN"  7
 box checkbox_checked.png       "$ORANGE" "$ORANGE_HI" 4 x "${CHECK[@]}"
 box checkbox_checked_focus.png "$ORANGE" "$CYAN"  7 x "${CHECK[@]}"
+box checkbox_deactivated.png   "#141927" "#232B3F" 4
+box checkbox_checked_deactivated.png "#3A2A26" "#4A3A36" 4 x "${CHECK[@]}"
 
 # Arrows (kart and track lists)
 tri() { # out color points
@@ -72,6 +75,9 @@ magick -size 64x64 xc:none -fill "rgba(21,27,43,0.94)" -stroke "rgba(255,255,255
 magick -size 256x256 xc:none -fill "$PANEL" -stroke "#2E3850" -strokewidth 6 -draw "roundrectangle 4,4 251,251 34,34" \
     -stroke "$ORANGE" -strokewidth 4 -draw "line 60,6 196,6" PNG32:dialog_solid.png
 magick -size 64x32 xc:none -fill "$PANEL" -stroke "#2E3850" -strokewidth 2 -draw "roundrectangle 1,1 62,30 8,8" PNG32:tooltip.png
+# Text bubbles (the help rows): dark, and an orange edge when expanded
+magick -size 64x64 xc:none -fill "$GLASS" -stroke "#2E3850" -strokewidth 3 -draw "roundrectangle 2,2 61,61 12,12" PNG32:textbubble.png
+magick -size 64x64 xc:none -fill "#25304A" -stroke "$ORANGE" -strokewidth 4 -draw "roundrectangle 2,2 61,61 12,12" PNG32:textbubble2.png
 magick -size 1024x128 xc:"#0E1322" -fill "#2A3348" -draw "rectangle 0,0 1023,2" PNG32:bottom_bar.png
 # Message bars (tutorial hints, achievements, errors): dark bar with a colored badge on the left
 msg() { # out badge mark...

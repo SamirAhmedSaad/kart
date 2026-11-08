@@ -93,6 +93,11 @@ void HighScoreSelection::refresh(bool forced_update, bool update_columns)
         m_high_scores_list_widget->clearColumns();
         beforeAddingWidget(); //Reload the columns used
     }
+
+    // Explain the empty list instead of showing a blank box
+    const bool empty = m_high_scores_list_widget->getItemCount() == 0;
+    getWidget("empty_icon")->setVisible(empty);
+    getWidget("empty_label")->setVisible(empty);
 }   // refresh
 
 // ----------------------------------------------------------------------------

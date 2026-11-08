@@ -20,6 +20,9 @@
 
 #include "guiengine/screen.hpp"
 
+#include <map>
+#include <string>
+
 namespace GUIEngine { class Widget; }
 
 /**
@@ -35,6 +38,18 @@ class RaceSetupScreen : public GUIEngine::Screen, public GUIEngine::ScreenSingle
     void onGameModeChanged();
 
     void assignDifficulty();
+
+    /** Shows the description of the selected game mode. */
+    void updateModeInfo();
+
+    /** Continues with the selected game mode. */
+    void startSelectedMode();
+
+    /** Description of each offered game mode, by item ID. */
+    std::map<std::string, irr::core::stringw> m_mode_descriptions;
+
+    /** The game mode selected last, so a second tap on it starts it. */
+    std::string m_last_mode;
 
 public:
 

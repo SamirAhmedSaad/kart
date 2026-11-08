@@ -45,22 +45,22 @@ Here you can configure advanced theming rules for this skin
       preserve_h_aspect_ratios="false" hborder_out_portion="0" vborder_out_portion="0"
       h_inner_padding="0.15" v_inner_padding="0.35"/>
 
-<!-- Provided by base theme
+<!-- Dark versions of the base theme images -->
 <element type="button" state="deactivated" image="button_inactive.png"
       left_border="18" right_border="18" top_border="14" bottom_border="20"
       preserve_h_aspect_ratios="false" hborder_out_portion="0" vborder_out_portion="0"
-      h_inner_padding="0.15" v_inner_padding="0.35"/>-->
+      h_inner_padding="0.15" v_inner_padding="0.35"/>
 
 <!-- TODO : buttons could support 'pressed' state -->
 
-<!-- Provided by base theme
+<!-- Dark text bubbles so the white help text stays readable -->
 <element type="textbubble" state="neutral" image="textbubble.png"
       left_border="13" right_border="13" top_border="13" bottom_border="13"
       hborder_out_portion="0.7" vborder_out_portion="0.3" />
 
 <element type="textbubble" state="focused" image="textbubble2.png"
       left_border="13" right_border="13" top_border="13" bottom_border="13"
-      hborder_out_portion="0.7" vborder_out_portion="0.3" />-->
+      hborder_out_portion="0.7" vborder_out_portion="0.3" />
 
 <element type="progress" state="fill" image="gauge_fill.png"
       left_border="7" right_border="7" top_border="7" bottom_border="7"
@@ -182,9 +182,9 @@ Here you can configure advanced theming rules for this skin
 <element type="checkbox" state="neutral+checked" image="checkbox_checked.png"/>
 <element type="checkbox" state="focused+unchecked" image="checkbox_focus.png"/>
 <element type="checkbox" state="focused+checked" image="checkbox_checked_focus.png"/>
-<!-- Provided by base theme
+<!-- Dark versions of the base theme images -->
 <element type="checkbox" state="deactivated+unchecked" image="checkbox_deactivated.png"/>
-<element type="checkbox" state="deactivated+checked" image="checkbox_checked_deactivated.png"/>-->
+<element type="checkbox" state="deactivated+checked" image="checkbox_checked_deactivated.png"/>
 
 <!-- are always in neutral state for now. No splitting into 9 areas is done; the image is just stretched.
      Note: the body of a guage is the same as for for spinners. -->
@@ -206,10 +206,10 @@ Here you can configure advanced theming rules for this skin
      The buttons are the top and bottom arrows. Image must be top arrow, will
      be mirrorred for bottom. Buttons can be in neutral or down state.
      Advanced stretching is only used for the background and thumb. -->
-<!-- Provided by base theme
+<!-- Dark versions of the base theme images -->
 <element type="scrollbar_background"          image="scrollbar_bg.png"
     left_border="7" right_border="7" top_border="7" bottom_border="7"
-    hborder_out_portion="0.0" vborder_out_portion="0.0" />-->
+    hborder_out_portion="0.0" vborder_out_portion="0.0" />
 <element type="scrollbar_thumb"               image="scrollbar_thumb.png"
     left_border="7" right_border="7" top_border="7" bottom_border="7"
     hborder_out_portion="0.0" vborder_out_portion="0.0" />

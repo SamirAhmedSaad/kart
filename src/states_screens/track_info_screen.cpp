@@ -90,7 +90,7 @@ void TrackInfoScreen::loadedFromFile()
     }
 
     video::ITexture* kart_not_found = irr_driver->getTexture(
-              file_manager->getAsset(FileManager::GUI_ICON, "random_kart.png"));
+              file_manager->getAsset(FileManager::GUI_ICON, "score_empty.png"));
 
     m_icon_unknown_kart = m_icon_bank->addTextureAsSprite(kart_not_found);
 

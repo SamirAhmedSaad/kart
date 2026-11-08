@@ -111,7 +111,7 @@ void KartStatsWidget::setValues(const KartProperties* props, HandicapLevel h)
     // Here we are not fully proportional, because small differences matter more
     setSkillValues(SKILL_SPEED,
                    (kp_computed.getCombinedCharacteristic()->getEngineMaxSpeed() - 20.0f) * 15.0f,
-                   "speed.png", "speed", _("Maximum speed"));
+                   "speed.png", "speed", _("Top speed"));
     
     // The acceleration depend on power and mass, and it changes depending on speed
     // We call a function which gives us a single number to represent it
@@ -124,7 +124,7 @@ void KartStatsWidget::setValues(const KartProperties* props, HandicapLevel h)
     // Nitro efficiency is hence 90/nitro_consumption
     setSkillValues(SKILL_NITRO_EFFICIENCY,
                     90.0f/kp_computed.getCombinedCharacteristic()->getNitroConsumption(),
-                   "nitro.png", "nitro", _("Nitro efficiency"));
+                   "nitro.png", "nitro", _("Nitro"));
     
     RaceManager::get()->setDifficulty(previous_difficulty);
 }   // setValues
@@ -138,6 +138,7 @@ void KartStatsWidget::setSkillValues(Stats skill_type, float value, const std::s
             file_manager->getAsset(FileManager::GUI_ICON, icon_name).c_str()));
     m_skills[skill_type]->m_properties[PROP_ID] = StringUtils::insertValues("@p%i_"+skillbar_propID, m_player_id);
     m_skills[skill_type]->m_iconbutton->setTooltip(icon_tooltip);
+    m_skills[skill_type]->setLabel(icon_tooltip);
 }   // setSkillValues
 
 // -----------------------------------------------------------------------------
