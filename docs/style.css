@@ -1,0 +1,86 @@
+:root {
+  --bg: #2a1550;
+  --bg-deep: #1a0e30;
+  --card: #ffffff;
+  --text: #1f1633;
+  --muted: #5d5470;
+  --purple: #7c3aed;
+  --pink: #ff2e88;
+  --orange: #ff8a00;
+  --yellow: #ffd60a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: linear-gradient(160deg, var(--orange) 0%, var(--pink) 35%, var(--purple) 70%, var(--bg-deep) 100%) fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+header {
+  text-align: center;
+  padding: 32px 16px 8px;
+}
+
+header img.logo { width: 220px; max-width: 60vw; filter: drop-shadow(0 6px 12px rgba(0,0,0,.35)); }
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 8px 16px 24px;
+}
+
+.pill, nav a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 14px;
+  background: var(--purple);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #4c1d95;
+}
+nav a:hover, .pill:hover { background: var(--pink); box-shadow: 0 4px 0 #9d174d; }
+
+main {
+  max-width: 820px;
+  margin: 0 auto 48px;
+  padding: 0 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 28px 28px 20px;
+  box-shadow: 0 10px 30px rgba(20, 0, 40, .35);
+  margin-bottom: 20px;
+}
+
+h1, h2 { font-weight: 900; line-height: 1.2; }
+h1 { margin-top: 0; color: var(--purple); }
+h2 { margin-top: 28px; color: var(--pink); font-size: 1.25rem; }
+p.meta { color: var(--muted); margin-top: -8px; }
+a { color: var(--purple); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+th { background: #f6f1ff; }
+
+footer {
+  text-align: center;
+  color: #fff;
+  padding: 0 16px 32px;
+  font-size: .9rem;
+  opacity: .9;
+}
+footer a { color: var(--yellow); }
+
+@media (max-width: 520px) {
+  .card { padding: 20px 16px 12px; border-radius: 18px; }
+  th, td { padding: 6px; }
+}
